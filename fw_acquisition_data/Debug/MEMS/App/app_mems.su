@@ -1,0 +1,12 @@
+../MEMS/App/app_mems.c:62:6:MX_MEMS_Init	8	static
+../MEMS/App/app_mems.c:84:6:MX_MEMS_Process	8	static
+../MEMS/App/app_mems.c:101:6:MX_IKS4A1_DataLogTerminal_Init	56	static
+../MEMS/App/app_mems.c:182:6:BSP_PB_Callback	16	static
+../MEMS/App/app_mems.c:191:6:MX_IKS4A1_DataLogTerminal_Process	16	static
+../MEMS/App/app_mems.c:257:13:floatToInt	32	static
+../MEMS/App/app_mems.c:280:13:Accelero_Sensor_Handler	88	static
+../MEMS/App/app_mems.c:347:13:Gyro_Sensor_Handler	88	static
+../MEMS/App/app_mems.c:414:13:Magneto_Sensor_Handler	88	static
+../MEMS/App/app_mems.c:481:13:Temp_Sensor_Handler	56	static
+../MEMS/App/app_mems.c:537:13:Press_Sensor_Handler	48	static
+../MEMS/App/app_mems.c:593:13:Hum_Sensor_Handler	48	static
