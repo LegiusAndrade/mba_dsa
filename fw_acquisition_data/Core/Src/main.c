@@ -23,7 +23,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "sd_functions.h"
+#include "stdio.h"
+#include "sd_benchmark.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,6 +99,44 @@ int main(void)
   MX_SPI2_Init();
   MX_MEMS_Init();
   /* USER CODE BEGIN 2 */
+  //  sd_mount();
+  //  sd_list_files();
+  //  sd_unmount();
+
+/*
+    sd_mount();
+    sd_read_file("F1/F1F2/File5.TXT", bufr, 50, &br);
+    printf("DATA from File:::: %s\n\n",bufr);
+    sd_unmount();
+*/
+
+  //  sd_mount();
+  //  sd_read_file("File1.TXT", bufr, 80, &br);
+  //  printf("DATA from File:::: %s\n\n",bufr);
+  //  sd_unmount();
+
+  //  sd_mount();
+  //  sd_write_file("FILE6.TXT", "This file is created by the cubeIDE\n");
+  //  sd_read_file("File6.txt", bufr, 80, &br);
+  //  printf("DATA from File:::: %s\n\n",bufr);
+  //  sd_list_files();
+  //  sd_unmount();
+
+  //#define max_records 20
+  //  CsvRecord myrecords[max_records];
+  //  int record_count = 0;
+  //  sd_mount();
+  //  sd_read_csv("F1/F1F2/File4.csv", myrecords, max_records, &record_count);
+  //  sd_unmount();
+
+  //    sd_mount();
+  //    sd_append_file("File6.txt", "This is Appended Text\n");
+  //    sd_read_file("File6.txt", bufr, 80, &br);
+  //    printf("DATA from File:::: %s\n\n",bufr);
+  //
+  //    sd_delete_file("File1.txt");
+  //    sd_list_files();
+  //    sd_unmount();
 
   /* USER CODE END 2 */
 
