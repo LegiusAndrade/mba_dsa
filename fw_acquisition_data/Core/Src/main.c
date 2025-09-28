@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -26,16 +26,24 @@
 #include "sd_functions.h"
 #include "stdio.h"
 #include "sd_benchmark.h"
+#include "iks4a1_motion_sensors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+typedef struct
+{
+  uint32_t timestamp;
+  IKS4A1_MOTION_SENSOR_Axes_t acceleration;
+  IKS4A1_MOTION_SENSOR_Axes_t angular_velocity;
+} sensors_data_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define TIMEOUT_REQUEST 	1000 					// 1 second
+#define TIME_READ		3					// 3 seconds
+#define TIMEOUT_READ 		((uint32_t)TIME_READ*TIMEOUT_REQUEST) 	// in second
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,8 +56,12 @@ SPI_HandleTypeDef hspi2;
 DMA_HandleTypeDef hdma_spi2_rx;
 DMA_HandleTypeDef hdma_spi2_tx;
 
-/* USER CODE BEGIN PV */
+TIM_HandleTypeDef htim1;
 
+/* USER CODE BEGIN PV */
+static sensors_data_t sensor_data[TIME_READ];
+static volatile size_t data_ready = 0;
+static volatile size_t count_data = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,6 +69,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_SPI2_Init(void);
+static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -97,38 +110,37 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_SPI2_Init();
+  MX_TIM1_Init();
   MX_MEMS_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT (&htim1);
   //  sd_mount();
   //  sd_list_files();
   //  sd_unmount();
 
-/*
-    sd_mount();
-    sd_read_file("F1/F1F2/File5.TXT", bufr, 50, &br);
-    printf("DATA from File:::: %s\n\n",bufr);
-    sd_unmount();
-*/
+  /*
+   sd_mount();
+   sd_read_file("F1/F1F2/File5.TXT", bufr, 50, &br);
+   printf("DATA from File:::: %s\n\n",bufr);
+   sd_unmount();
+   */
 
   //  sd_mount();
   //  sd_read_file("File1.TXT", bufr, 80, &br);
   //  printf("DATA from File:::: %s\n\n",bufr);
   //  sd_unmount();
-
   //  sd_mount();
   //  sd_write_file("FILE6.TXT", "This file is created by the cubeIDE\n");
   //  sd_read_file("File6.txt", bufr, 80, &br);
   //  printf("DATA from File:::: %s\n\n",bufr);
   //  sd_list_files();
   //  sd_unmount();
-
   //#define max_records 20
   //  CsvRecord myrecords[max_records];
   //  int record_count = 0;
   //  sd_mount();
   //  sd_read_csv("F1/F1F2/File4.csv", myrecords, max_records, &record_count);
   //  sd_unmount();
-
   //    sd_mount();
   //    sd_append_file("File6.txt", "This is Appended Text\n");
   //    sd_read_file("File6.txt", bufr, 80, &br);
@@ -137,18 +149,67 @@ int main(void)
   //    sd_delete_file("File1.txt");
   //    sd_list_files();
   //    sd_unmount();
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
+    {
     /* USER CODE END WHILE */
 
   MX_MEMS_Process();
     /* USER CODE BEGIN 3 */
-  }
+      if (data_ready)
+	{
+	  const char name_file[] =
+	    { "sensor_data.csv" };
+	  const char header_csv[] =
+	      "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n";
+	  // Save data to SD card
+	  sd_mount ();
+	  sd_write_file (name_file, header_csv); // Write header
+
+	  for (size_t i = 0; i < TIME_READ; i++)
+	    {
+	      char line[128] =
+		{ 0 };
+	      snprintf (line, sizeof(line), "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n",
+			(unsigned long) sensor_data[i].timestamp,
+			(long) sensor_data[i].acceleration.x,
+			(long) sensor_data[i].acceleration.y,
+			(long) sensor_data[i].acceleration.z,
+			(long) sensor_data[i].angular_velocity.x,
+			(long) sensor_data[i].angular_velocity.y,
+			(long) sensor_data[i].angular_velocity.z);
+	      sd_append_file (name_file, line);
+	    }
+	  sd_unmount ();
+	}
+
+/*      if (data_ready) {
+        data_ready = 0;
+
+        sd_mount();
+        FIL file;
+        if (f_open(&file, "sensor_data.csv", FA_WRITE | FA_OPEN_APPEND) == FR_OK) {
+          if (f_size(&file) == 0) {
+            f_printf(&file, "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n");
+          }
+          for (size_t i = 0; i < TIME_READ; i++) {
+            f_printf(&file, "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n",
+                     (unsigned long)sensor_data[i].timestamp,
+                     (long)sensor_data[i].acceleration.x,
+                     (long)sensor_data[i].acceleration.y,
+                     (long)sensor_data[i].acceleration.z,
+                     (long)sensor_data[i].angular_velocity.x,
+                     (long)sensor_data[i].angular_velocity.y,
+                     (long)sensor_data[i].angular_velocity.z);
+          }
+          f_close(&file);
+        }
+        sd_unmount();
+      }*/
+    }
   /* USER CODE END 3 */
 }
 
@@ -237,6 +298,52 @@ static void MX_SPI2_Init(void)
 }
 
 /**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 8399;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 0;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
@@ -290,6 +397,42 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+void
+HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef *htim)
+{
+  static uint32_t prev = 0;
+  if (htim->Instance == TIM1)  // Check if the interrupt comes from TIM1
+    {
+      __HAL_TIM_SET_AUTORELOAD(htim, 999); // Set the time to 100ms interrupt
+      // Your code to be executed every second
+      if (count_data < TIME_READ)
+	{
+	  if (IKS4A1_MOTION_SENSOR_GetAxes (
+	      IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, &sensor_data[count_data].acceleration) != 0)
+	    {
+	      // Handle error
+	    }
+	  if (IKS4A1_MOTION_SENSOR_GetAxes (
+	      IKS4A1_LSM6DSV16X_0, MOTION_GYRO, &sensor_data[count_data].angular_velocity) != 0)
+	    {
+	      // Handle error
+	    }
+	  uint32_t now = HAL_GetTick ();
+	  sensor_data[count_data].timestamp = (prev == 0) ? 0 : (now - prev);
+	  prev = now;
+	  count_data++;
+	  if (count_data >= TIME_READ)
+	    {
+	      data_ready = 1;           // avisa a thread principal
+	    }
+
+	}
+      else
+	{
+
+	}
+    }
+}
 /* USER CODE END 4 */
 
 /**
@@ -300,10 +443,10 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
+  __disable_irq ();
   while (1)
-  {
-  }
+    {
+    }
   /* USER CODE END Error_Handler_Debug */
 }
 #ifdef USE_FULL_ASSERT
