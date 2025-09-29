@@ -1,0 +1,97 @@
+!SESSION 2025-09-29 09:42:01.088 -----------------------------------------------
+eclipse.buildId=Version 1.16.1
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-09-29 09:43:32.697
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-09-29 09:43:32.722
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-09-29 09:43:41.750
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2025-09-29 10:06:41.995
+!MESSAGE No digest algorithm is available to verify download of org.eclipse.update.feature,com.st.ispu.tools,2.0.0.
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2025-09-29 10:06:41.996
+!MESSAGE No digest algorithm is available to verify download of osgi.bundle,com.st.ispu.tools,2.0.0.
+
+!ENTRY org.eclipse.equinox.p2.artifact.repository 2 0 2025-09-29 10:06:41.998
+!MESSAGE No digest algorithm is available to verify download of osgi.bundle,com.st.ispu.tools.doc,2.0.0.
+
+!ENTRY org.eclipse.equinox.preferences 4 4 2025-09-29 10:13:37.576
+!MESSAGE Exception saving preferences to: C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/p2/org.eclipse.equinox.p2.engine/profileRegistry/STM32CubeIDE.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs.
+!STACK 0
+java.nio.file.FileAlreadyExistsException: C:\ST\STM32CubeIDE_1.16.1\STM32CubeIDE\p2\org.eclipse.equinox.p2.engine\profileRegistry\STM32CubeIDE.profile\.data\.settings\org.eclipse.equinox.p2.metadata.repository.prefs.bak -> C:\ST\STM32CubeIDE_1.16.1\STM32CubeIDE\p2\org.eclipse.equinox.p2.engine\profileRegistry\STM32CubeIDE.profile\.data\.settings\org.eclipse.equinox.p2.metadata.repository.prefs
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293)
+	at java.base/java.nio.file.Files.move(Files.java:1432)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.write(EclipsePreferences.java:289)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.save(EclipsePreferences.java:1039)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.doSave(ProfilePreferences.java:141)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences$SaveJob.run(ProfilePreferences.java:54)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.equinox.p2.engine 2 0 2025-09-29 10:13:37.590
+!MESSAGE Exception saving profile preferences
+!STACK 0
+org.osgi.service.prefs.BackingStoreException: Exception saving preferences to: C:/ST/STM32CubeIDE_1.16.1/STM32CubeIDE/p2/org.eclipse.equinox.p2.engine/profileRegistry/STM32CubeIDE.profile/.data/.settings/org.eclipse.equinox.p2.metadata.repository.prefs.
+	at org.eclipse.core.internal.preferences.EclipsePreferences.write(EclipsePreferences.java:297)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.save(EclipsePreferences.java:1039)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences.doSave(ProfilePreferences.java:141)
+	at org.eclipse.equinox.internal.p2.engine.ProfilePreferences$SaveJob.run(ProfilePreferences.java:54)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.nio.file.FileAlreadyExistsException: C:\ST\STM32CubeIDE_1.16.1\STM32CubeIDE\p2\org.eclipse.equinox.p2.engine\profileRegistry\STM32CubeIDE.profile\.data\.settings\org.eclipse.equinox.p2.metadata.repository.prefs.bak -> C:\ST\STM32CubeIDE_1.16.1\STM32CubeIDE\p2\org.eclipse.equinox.p2.engine\profileRegistry\STM32CubeIDE.profile\.data\.settings\org.eclipse.equinox.p2.metadata.repository.prefs
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293)
+	at java.base/java.nio.file.Files.move(Files.java:1432)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.write(EclipsePreferences.java:289)
+	... 4 more
+
+!ENTRY org.eclipse.equinox.p2.touchpoint.natives 2 0 2025-09-29 10:13:45.119
+!MESSAGE Could not remove temporary backup directory (it is safe to manually delete it and its contents): C:\Users\LUCASS~1.JAS\AppData\Local\Temp\STM32CubeIDE_984419d5-0098-403c-8859-7775bd64656d
+!SESSION 2025-09-29 10:15:04.685 -----------------------------------------------
+eclipse.buildId=Version 1.16.1
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data file:/C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/workspace/
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-09-29 10:15:39.879
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-09-29 10:15:39.881
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-09-29 10:15:53.850
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-09-29 12:44:40.672 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Framework arguments:  C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\fw_acquisition_data\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\fw_acquisition_data\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-09-29 12:45:44.221
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-09-29 12:45:44.223
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-09-29 12:45:50.081
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-09-29 12:46:09.080
+!MESSAGE Indexed 'fw_acquisition_data' (57 sources, 172 headers) in 13.3 sec: 31,137 declarations; 129,087 references; 27 unresolved inclusions; 1,471 syntax errors; 5,814 unresolved names (3.5%)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-09-29 12:57:54.304
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42

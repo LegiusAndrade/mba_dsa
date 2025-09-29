@@ -74,8 +74,8 @@ all: main-build
 main-build: fw_acquisition_data.elf secondary-outputs
 
 # Tool invocations
-fw_acquisition_data.elf fw_acquisition_data.map: $(OBJS) $(USER_OBJS) C:\Users\Lucas\Desktop\mba_dsa\fw_acquisition_data\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "fw_acquisition_data.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Lucas\Desktop\mba_dsa\fw_acquisition_data\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="fw_acquisition_data.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+fw_acquisition_data.elf fw_acquisition_data.map: $(OBJS) $(USER_OBJS) C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\fw_acquisition_data\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "fw_acquisition_data.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\fw_acquisition_data\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="fw_acquisition_data.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
