@@ -146,7 +146,7 @@
         <setting id="org.eclipse.cdt.core.formatter.insert_space_after_opening_structured_binding_name_list" value="insert"/>
         <setting id="org.eclipse.cdt.core.formatter.insert_space_after_closing_brace_in_block" value="insert"/>
         <setting id="org.eclipse.cdt.core.formatter.format_guardian_clause_on_one_line" value="false"/>
-        <setting id="org.eclipse.cdt.core.formatter.indentation.size" value="8"/>
+        <setting id="org.eclipse.cdt.core.formatter.indentation.size" value="4"/>
         <setting id="org.eclipse.cdt.core.formatter.insert_space_after_opening_angle_bracket_in_template_parameters" value="insert"/>
         <setting id="org.eclipse.cdt.core.formatter.insert_space_before_closing_paren_in_switch" value="insert"/>
         <setting id="org.eclipse.cdt.core.formatter.alignment_for_expression_list" value="0"/>
@@ -187,7 +187,7 @@
         <setting id="org.eclipse.cdt.core.formatter.alignment_for_enumerator_list" value="81"/>
         <setting id="org.eclipse.cdt.core.formatter.insert_space_before_opening_structured_binding_name_list" value="insert"/>
         <setting id="org.eclipse.cdt.core.formatter.insert_space_before_pointer_in_method_declaration" value="insert"/>
-        <setting id="org.eclipse.cdt.core.formatter.tabulation.size" value="4"/>
+        <setting id="org.eclipse.cdt.core.formatter.tabulation.size" value="8"/>
         <setting id="org.eclipse.cdt.core.formatter.insert_space_before_closing_paren_in_method_invocation" value="insert"/>
     </profile>
 </profiles>
