@@ -909,3 +909,396 @@ org.eclipse.core.runtime.CoreException: Setup exceptions
 
 !ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 13:35:20.070
 !MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/main.c
+!SESSION 2025-10-01 17:18:32.028 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.microsoft.copilot.eclipse.ui.terminal.tm 4 0 2025-10-01 17:18:33.212
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: com.microsoft.copilot.eclipse.ui.terminal.tm [873]
+  Unresolved requirement: Require-Bundle: org.eclipse.tm.terminal.view.core
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.SystemModule.startWorker(SystemModule.java:274)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:639)
+	at org.eclipse.osgi.container.Module.start(Module.java:498)
+	at org.eclipse.osgi.container.SystemModule.start(SystemModule.java:198)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:463)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:482)
+	at org.eclipse.osgi.launch.Equinox.start(Equinox.java:139)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.startup(EclipseStarter.java:367)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:267)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:668)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:605)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1481)
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-10-01 17:19:46.075
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-10-01 17:19:46.077
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:19:59.045
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:19:59.051
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:19:59.096
+!MESSAGE [Info] Lsp agent started successfully.
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:20:03.082
+!MESSAGE [Info]	[lsp] GitHub Copilot Language Server 1.363.0 initialized
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:20:03.519
+!MESSAGE [Info]	[certificates] Removed 13 expired certificates
+
+!ENTRY com.microsoft.copilot.eclipse 4 0 2025-10-01 17:20:04.490
+!MESSAGE [Error] Failed to install terminal bundle
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: com.microsoft.copilot.eclipse.ui.terminal.tm [874]
+  Unresolved requirement: Require-Bundle: org.eclipse.tm.terminal.view.core
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:463)
+	at com.microsoft.copilot.eclipse.terminal.api.TerminalServiceManager.ensureStarted(TerminalServiceManager.java:306)
+	at com.microsoft.copilot.eclipse.terminal.api.TerminalServiceManager.installAndRefreshBundle(TerminalServiceManager.java:262)
+	at com.microsoft.copilot.eclipse.terminal.api.TerminalServiceManager$2.run(TerminalServiceManager.java:216)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY com.microsoft.copilot.eclipse.terminal.api 4 0 2025-10-01 17:20:04.518
+!MESSAGE Failed to install terminal bundle
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: com.microsoft.copilot.eclipse.ui.terminal.tm [874]
+  Unresolved requirement: Require-Bundle: org.eclipse.tm.terminal.view.core
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:463)
+	at com.microsoft.copilot.eclipse.terminal.api.TerminalServiceManager.ensureStarted(TerminalServiceManager.java:306)
+	at com.microsoft.copilot.eclipse.terminal.api.TerminalServiceManager.installAndRefreshBundle(TerminalServiceManager.java:262)
+	at com.microsoft.copilot.eclipse.terminal.api.TerminalServiceManager$2.run(TerminalServiceManager.java:216)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-10-01 17:20:06.890
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.operations 4 10053 2025-10-01 17:27:19.126
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.operations 1 10001 2025-10-01 17:27:19.126
+!MESSAGE Your original request has been modified.
+!SUBENTRY 2 org.eclipse.equinox.p2.operations 1 10003 2025-10-01 17:27:19.126
+!MESSAGE "TM Terminal Control" is already installed, so an update will be performed instead.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 10053 2025-10-01 17:27:19.126
+!MESSAGE Cannot complete the install because one or more required items could not be found.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.126
+!MESSAGE Software being installed: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.126
+!MESSAGE Missing requirement for filter properties ~= $0: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827) requires 'org.eclipse.equinox.p2.iu; org.eclipse.terminal.connector.local 1.0.0, filter=(!(org.eclipse.equinox.p2.exclude.import=true))' but it could not be found
+
+!ENTRY org.eclipse.equinox.p2.operations 4 10053 2025-10-01 17:27:19.148
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.operations 1 10001 2025-10-01 17:27:19.148
+!MESSAGE Your original request has been modified.
+!SUBENTRY 2 org.eclipse.equinox.p2.operations 1 10003 2025-10-01 17:27:19.148
+!MESSAGE "TM Terminal Control" is already installed, so an update will be performed instead.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 10053 2025-10-01 17:27:19.148
+!MESSAGE Cannot complete the install because one or more required items could not be found.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.148
+!MESSAGE Software being installed: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.148
+!MESSAGE Missing requirement for filter properties ~= $0: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827) requires 'org.eclipse.equinox.p2.iu; org.eclipse.terminal.connector.local 1.0.0, filter=(!(org.eclipse.equinox.p2.exclude.import=true))' but it could not be found
+
+!ENTRY org.eclipse.equinox.p2.operations 4 10053 2025-10-01 17:27:19.175
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.operations 1 10001 2025-10-01 17:27:19.175
+!MESSAGE Your original request has been modified.
+!SUBENTRY 2 org.eclipse.equinox.p2.operations 1 10003 2025-10-01 17:27:19.175
+!MESSAGE "TM Terminal Control" is already installed, so an update will be performed instead.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 10053 2025-10-01 17:27:19.175
+!MESSAGE Cannot complete the install because one or more required items could not be found.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.175
+!MESSAGE Software being installed: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.175
+!MESSAGE Missing requirement for filter properties ~= $0: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827) requires 'org.eclipse.equinox.p2.iu; org.eclipse.terminal.connector.local 1.0.0, filter=(!(org.eclipse.equinox.p2.exclude.import=true))' but it could not be found
+
+!ENTRY org.eclipse.equinox.p2.operations 4 10053 2025-10-01 17:27:19.176
+!MESSAGE Operation details
+!SUBENTRY 1 org.eclipse.equinox.p2.operations 1 10001 2025-10-01 17:27:19.176
+!MESSAGE Your original request has been modified.
+!SUBENTRY 2 org.eclipse.equinox.p2.operations 1 10003 2025-10-01 17:27:19.176
+!MESSAGE "TM Terminal Control" is already installed, so an update will be performed instead.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 4 10053 2025-10-01 17:27:19.176
+!MESSAGE Cannot complete the install because one or more required items could not be found.
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.176
+!MESSAGE Software being installed: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827)
+!SUBENTRY 2 org.eclipse.equinox.p2.director 4 0 2025-10-01 17:27:19.176
+!MESSAGE Missing requirement for filter properties ~= $0: TM Terminal Local Connector Extensions 12.2.0.202507240827 (org.eclipse.tm.terminal.connector.local.feature.feature.group 12.2.0.202507240827) requires 'org.eclipse.equinox.p2.iu; org.eclipse.terminal.connector.local 1.0.0, filter=(!(org.eclipse.equinox.p2.exclude.import=true))' but it could not be found
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:31:31.112
+!MESSAGE [Info] Document is null for editor: main.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:31:31.114
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/main.c
+!SESSION 2025-10-01 17:31:33.106 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data file:/C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/workspace/
+
+!ENTRY com.microsoft.copilot.eclipse.ui.terminal.tm 4 0 2025-10-01 17:31:34.800
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: com.microsoft.copilot.eclipse.ui.terminal.tm [874]
+  Unresolved requirement: Require-Bundle: org.eclipse.tm.terminal.view.core
+
+	at org.eclipse.osgi.container.Module.start(Module.java:493)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2074)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:143)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2065)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2005)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1968)
+	at org.eclipse.osgi.container.SystemModule.startWorker(SystemModule.java:274)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:639)
+	at org.eclipse.osgi.container.Module.start(Module.java:498)
+	at org.eclipse.osgi.container.SystemModule.start(SystemModule.java:198)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:463)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:482)
+	at org.eclipse.osgi.launch.Equinox.start(Equinox.java:139)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.startup(EclipseStarter.java:367)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:267)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:668)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:605)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1481)
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-10-01 17:31:50.268
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-10-01 17:31:50.273
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:31:59.249
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:31:59.262
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:31:59.329
+!MESSAGE [Info] Lsp agent started successfully.
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:32:03.218
+!MESSAGE [Info]	[lsp] GitHub Copilot Language Server 1.363.0 initialized
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:32:03.686
+!MESSAGE [Info]	[certificates] Removed 13 expired certificates
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-10-01 17:32:03.864
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 17:33:13.235
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:36:19.203
+!MESSAGE [Info] Document is null for editor: iks4a1_motion_sensors.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:36:19.205
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Drivers/BSP/IKS4A1/iks4a1_motion_sensors.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:36:19.954
+!MESSAGE [Info] Document is null for editor: iks4a1_conf.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 17:36:19.955
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/MEMS/Target/iks4a1_conf.h
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:37:18.153
+!MESSAGE [Info]	[default] Context provider relatedFilesShim exceeded time budget of 150ms
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 17:38:56.791
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 17:42:36.249
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:47:23.673
+!MESSAGE [Info]	[fetchCompletions] Request 7fb45698-7eca-4361-a30c-c39baaefc3ee at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1027.1359999999404ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:47:23.825
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:47:24.332
+!MESSAGE [Info]	[fetchCompletions] Request 25156d17-fe09-4e49-b9d5-c2c0a4311bc3 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 414.2752000000328ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 17:47:24.397
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 17:47:43.201
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 18:19:09.914
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 18:24:29.919
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:32:48.144
+!MESSAGE [Info] Document is null for editor: sd_diskio_spi.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:32:48.145
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Inc/sd_diskio_spi.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:32:52.956
+!MESSAGE [Info] Document is null for editor: sd_spi.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:32:52.958
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Inc/sd_spi.h
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 18:34:05.039
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-10-01 18:34:08.675
+!MESSAGE Error in final launch sequence:
+
+Setup exceptions
+!STACK 1
+org.eclipse.core.runtime.CoreException: Setup exceptions
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-10-01 18:34:08.676
+!MESSAGE Setup exceptions
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 18:34:24.037
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:49:01.264
+!MESSAGE [Info] Document is null for editor: stm32f4xx_nucleo_bus.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:49:01.265
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/stm32f4xx_nucleo_bus.c
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:50:50.558
+!MESSAGE [Info]	[fetchCompletions] Request 1092fd15-122e-4982-9741-dd00a4017a03 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 859.4531000005081ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:50:50.615
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:50:51.072
+!MESSAGE [Info]	[fetchCompletions] Request 250fb639-1318-4171-be15-bf8ad9744cd3 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 433.4640999995172ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:50:51.116
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:51:06.274
+!MESSAGE [Info]	[fetchCompletions] Request a4850552-bf00-4b8d-9ba4-50c0ede8613d at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 380.7982999999076ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:51:06.337
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 18:51:14.511
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2025-10-01 18:52:49.930
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.debug.ui.actions.DsfSuspendCommand$4$1@7577746a): Status ERROR: org.eclipse.cdt.dsf.gdb code=10004 Suspend operation timeout.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2025-10-01 18:52:49.930
+!MESSAGE Suspend operation timeout.
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:52:56.697
+!MESSAGE [Info]	[fetchCompletions] Request 3c887b2b-781c-48e9-920b-88565fb74bd8 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 396.280199999921ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:52:56.837
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:52:57.248
+!MESSAGE [Info]	[fetchCompletions] Request cd4bce54-1441-47c5-b498-d09829a79085 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 387.09860000014305ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:52:57.483
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:52:57.908
+!MESSAGE [Info]	[fetchCompletions] Request 9550aace-00e4-485c-96b5-0be414163458 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 397.3704000003636ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:52:57.909
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-01 18:53:09.684
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:11.389
+!MESSAGE [Info] Document is null for editor: startup_stm32f401retx.s
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:11.390
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Startup/startup_stm32f401retx.s
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:11.770
+!MESSAGE [Info] Document is null for editor: sd_functions.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:11.771
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/sd_functions.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.433
+!MESSAGE [Info] Document is null for editor: sd_spi.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.433
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/sd_spi.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.629
+!MESSAGE [Info] Document is null for editor: system_stm32f4xx.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.629
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/system_stm32f4xx.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.813
+!MESSAGE [Info] Document is null for editor: main.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.813
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Inc/main.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.956
+!MESSAGE [Info] Document is null for editor: stm32f4xx_it.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:12.956
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/stm32f4xx_it.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:13.227
+!MESSAGE [Info] Document is null for editor: iks4a1_motion_sensors.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:13.228
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Drivers/BSP/IKS4A1/iks4a1_motion_sensors.h
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:14.395
+!MESSAGE [Info] Document is null for editor: lis2duxs12.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:53:14.395
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Drivers/BSP/Components/lis2duxs12/lis2duxs12.c
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:54:29.340
+!MESSAGE [Info]	[fetchCompletions] Request 4427482f-4d8b-4f55-805b-1db640ac0d90 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 315.493599999696ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-01 18:54:29.392
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:54:32.591
+!MESSAGE [Info] Document is null for editor: main.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:54:32.591
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/main.c

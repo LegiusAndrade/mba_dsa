@@ -23,10 +23,10 @@
  * You are free to edit anything below this line
  ***************************************************************/
 
-#define USE_DMA 1
+#define USE_DMA 0
 
-extern SPI_HandleTypeDef hspi2;
-#define SD_SPI_HANDLE hspi2
+extern SPI_HandleTypeDef hspi1;
+#define SD_SPI_HANDLE hspi1
 
 #define SD_CS_LOW()     HAL_GPIO_WritePin(SD_CS_GPIO_Port, SD_CS_Pin, GPIO_PIN_RESET)
 #define SD_CS_HIGH()    HAL_GPIO_WritePin(SD_CS_GPIO_Port, SD_CS_Pin, GPIO_PIN_SET)
@@ -45,7 +45,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi) {
 }
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
-	if (hspi == &hspi2) dma_rx_done = 1;
+	if (hspi == &hspi1) dma_rx_done = 1;
 }
 #endif
 
@@ -74,7 +74,7 @@ static void SD_ReceiveBuffer(uint8_t *buffer, uint16_t len) {
 	static uint8_t tx_dummy[512];
     for (int i = 0; i < len; i++) tx_dummy[i] = 0xFF;  // Fill with 0xFF
     dma_rx_done = 0;
-    HAL_SPI_TransmitReceive_DMA(&hspi2, tx_dummy, buffer, len);
+    HAL_SPI_TransmitReceive_DMA(&hspi1, tx_dummy, buffer, len);
     while (!dma_rx_done);
 #else
     for (uint16_t i = 0; i < len; i++) {

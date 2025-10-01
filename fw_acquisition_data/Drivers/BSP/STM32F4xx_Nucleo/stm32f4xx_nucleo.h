@@ -84,16 +84,16 @@
 /** Define number of LED            **/
 #define LEDn                              1U
 /**  Definition for BSP USER LED 2   **/
-#define LED2_PIN                     	  GPIO_PIN_5
-#define LED2_GPIO_PORT                    GPIOA
-#define LED2_GPIO_CLK_ENABLE()            __HAL_RCC_GPIOA_CLK_ENABLE()
-#define LED2_GPIO_CLK_DISABLE()           __HAL_RCC_GPIOA_CLK_DISABLE()
+#define LED2_PIN                     	  GPIO_PIN_0
+#define LED2_GPIO_PORT                    GPIOB
+#define LED2_GPIO_CLK_ENABLE()            __HAL_RCC_GPIOB_CLK_ENABLE()
+#define LED2_GPIO_CLK_DISABLE()           __HAL_RCC_GPIOB_CLK_DISABLE()
 
 #define BUS_GPIO_INSTANCE GPIO
-#define BUS_BSP_LED_GPIO_CLK_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
-#define BUS_BSP_LED_GPIO_PORT GPIOA
-#define BUS_BSP_LED_GPIO_CLK_DISABLE() __HAL_RCC_GPIOA_CLK_DISABLE()
-#define BUS_BSP_LED_GPIO_PIN GPIO_PIN_5
+#define BUS_BSP_LED_GPIO_CLK_ENABLE() __HAL_RCC_GPIOB_CLK_ENABLE()
+#define BUS_BSP_LED_GPIO_PORT GPIOB
+#define BUS_BSP_LED_GPIO_CLK_DISABLE() __HAL_RCC_GPIOB_CLK_DISABLE()
+#define BUS_BSP_LED_GPIO_PIN GPIO_PIN_0
 
 /**
  * @}
