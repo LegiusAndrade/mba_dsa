@@ -1,10 +1,10 @@
-18:53:02 **** Incremental Build of configuration Debug for project fw_acquisition_data ****
+13:03:38 **** Incremental Build of configuration Debug for project fw_acquisition_data ****
 make -j12 all 
 arm-none-eabi-size  fw_acquisition_data.elf 
    text	   data	    bss	    dec	    hex	filename
-  97472	    644	   4732	 102848	  191c0	fw_acquisition_data.elf
+  97416	    644	   4732	 102792	  19188	fw_acquisition_data.elf
 Finished building: default.size.stdout
  
 
-18:53:02 Build Finished. 0 errors, 0 warnings. (took 303ms)
+13:03:39 Build Finished. 0 errors, 0 warnings. (took 775ms)
 

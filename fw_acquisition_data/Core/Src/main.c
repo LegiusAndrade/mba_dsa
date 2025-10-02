@@ -42,7 +42,7 @@ typedef struct
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define BASE_TIME_TIM1		100					// in ms
-#define AMOUNT_DATA		30					// amount of data to read
+#define AMOUNT_DATA		    30					// amount of data to read
 
 /* USER CODE END PD */
 
@@ -117,9 +117,9 @@ int main(void)
   MX_MEMS_Init();
   /* USER CODE BEGIN 2 */
     HAL_TIM_Base_Start_IT( &htim1 );
-    sd_mount();
+    /*sd_mount();
     sd_list_files();
-    sd_unmount();
+    sd_unmount();*/
 
     /*
      sd_mount();
@@ -167,6 +167,7 @@ int main(void)
             const char name_file[] = { "sensor_data.csv" };
             const char header_csv[] = "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n";
             // Save data to SD card
+            sd_list_files();
             sd_mount();
             sd_write_file( name_file, header_csv ); // Write header
 
@@ -375,7 +376,7 @@ static void MX_GPIO_Init(void)
 
 void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
 {
-    static uint32_t prev = 0;
+
     if( htim->Instance == TIM1 )  // Check if the interrupt comes from TIM1
     {
         // Your code to be executed every second
@@ -393,10 +394,10 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
             {
                 // Handle error
             }
-            uint32_t now = HAL_GetTick();
-            sensor_data[count_data].timestamp = ( prev == 0 ) ? 0 : ( now - prev );
-            printf( "Now: %lu, Prev: %lu, Delta: %lu\n", (unsigned long) now, (unsigned long) prev, (unsigned long) sensor_data[count_data].timestamp );
-            prev = now;
+
+            sensor_data[count_data].timestamp = count_data * BASE_TIME_TIM1; //now - prev;
+            printf("Timestamp: %lu ms\n",
+                   (unsigned long) sensor_data[count_data].timestamp);
             count_data++;
 
         }

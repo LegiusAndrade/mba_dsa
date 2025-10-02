@@ -1302,3 +1302,305 @@ org.eclipse.core.runtime.CoreException: Setup exceptions
 
 !ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-01 18:54:32.591
 !MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/main.c
+!SESSION 2025-10-02 08:45:48.933 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-10-02 08:47:16.838
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-10-02 08:47:16.840
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 08:47:22.627
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 08:47:22.633
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 08:47:22.669
+!MESSAGE [Info] Lsp agent started successfully.
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 08:47:25.466
+!MESSAGE [Info]	[lsp] GitHub Copilot Language Server 1.363.0 initialized
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 08:47:25.993
+!MESSAGE [Info]	[certificates] Removed 13 expired certificates
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-10-02 08:47:28.638
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 08:47:41.558
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 09:48:21.146
+!MESSAGE [Info] Document is null for editor: main.c
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 09:48:21.154
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/lucas.silva.JASSY/Desktop/git_lucas/mba_dsa/fw_acquisition_data/Core/Src/main.c
+!SESSION 2025-10-02 12:22:16.707 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-10-02 12:27:17.890
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-10-02 12:27:17.895
+!MESSAGE Log4j2 initialized with config file C:\Users\lucas.silva.JASSY\Desktop\git_lucas\mba_dsa\workspace\.metadata\.log4j2.xml
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 12:27:27.590
+!MESSAGE [Info] Starting language server with binary lsp agent.
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 12:27:27.596
+!MESSAGE [Info] Found native binary in fragment bundle: com.microsoft.copilot.eclipse.core.agent.win32
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2025-10-02 12:27:27.654
+!MESSAGE [Info] Lsp agent started successfully.
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:27:30.962
+!MESSAGE [Info]	[lsp] GitHub Copilot Language Server 1.363.0 initialized
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:27:31.513
+!MESSAGE [Info]	[certificates] Removed 13 expired certificates
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-10-02 12:27:36.854
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:28:03.303
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:28:31.399
+!MESSAGE [Info]	[default] Context provider relatedFilesShim exceeded time budget of 150ms
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:32:58.614
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:37:26.102
+!MESSAGE [Info]	[fetchCompletions] Request 17031d25-87f5-45da-ad88-240537d1828a at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1165.6461999999592ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:37:26.143
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:37:46.810
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:44:48.036
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:46:52.037
+!MESSAGE [Info]	[fetchCompletions] Request a14f1e35-184e-4132-aa0d-30744e12031c at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1056.7085000001825ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:46:52.078
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:47:17.236
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:48:35.511
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:51:38.499
+!MESSAGE [Info]	[fetchCompletions] Request 1b434b0a-1b0c-4559-9946-1d49e1e5a6ce at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1049.001700000139ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 12:51:38.601
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:52:09.305
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-10-02 12:52:13.330
+!MESSAGE Error in final launch sequence:
+
+Setup exceptions
+!STACK 1
+org.eclipse.core.runtime.CoreException: Setup exceptions
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-10-02 12:52:13.332
+!MESSAGE Setup exceptions
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 12:52:41.240
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:25.113
+!MESSAGE [Info]	[fetchCompletions] Request de46edc4-493c-4ca7-9bf1-81f7898326f0 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 1049.4867000000086ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:25.139
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:25.621
+!MESSAGE [Info]	[fetchCompletions] Request a99f1c23-3d9d-486d-9f23-901d65e98e43 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 441.26069999998435ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:25.689
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:26.035
+!MESSAGE [Info]	[fetchCompletions] Request 8cc08f23-4531-4c82-810f-1209a0fbcfb8 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 292.8485999999102ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:26.088
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:26.930
+!MESSAGE [Info]	[code-referencing] Calling Match
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:27.464
+!MESSAGE [Info]	[code-referencing] No match found
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:34.960
+!MESSAGE [Info]	[fetchCompletions] Request 1893c3a3-6ccd-47fc-a3ec-a1bbcd1ce2ec at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 381.96129999984987ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:35.150
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:35.529
+!MESSAGE [Info]	[fetchCompletions] Request 17ce9dff-52cf-4e52-9278-d785677d58dd at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 321.6144000000786ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:35.969
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [null]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:38.835
+!MESSAGE [Info]	[fetchCompletions] Request 36f61e5f-42fa-4ce0-9723-c72224ac21d4 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 389.1714000001084ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:39.011
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:39.553
+!MESSAGE [Info]	[fetchCompletions] Request e469c4df-d8b6-46e3-a64f-d54c670c51b8 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 485.6062999998685ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:39.569
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:42.213
+!MESSAGE [Info]	[fetchCompletions] Request ccc6298d-9c1a-4c58-a5d8-c6115010d2ff at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 486.2998999999836ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:42.275
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:50.611
+!MESSAGE [Info]	[fetchCompletions] Request 3e6907bc-b0b7-45ed-9d05-5c1a44559d60 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 474.9621999999508ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:50.652
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:01:59.849
+!MESSAGE [Info]	[fetchCompletions] Request 2d0b280e-4134-4b0e-a70c-2619a8077322 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 417.3404000001028ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:00.946
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:01.462
+!MESSAGE [Info]	[fetchCompletions] Request 59e7d005-2ff9-4afe-8a0d-835f18e5c3e9 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 396.6573999999091ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:02.441
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:02.871
+!MESSAGE [Info]	[fetchCompletions] Request 730a627c-b350-44c5-a30a-5d533d5c2466 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 334.281399999978ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:04.189
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:04.703
+!MESSAGE [Info]	[fetchCompletions] Request 2f1ca7d0-c2c0-4972-ba9f-2debcd917c83 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 427.9451999999583ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:04.809
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:07.914
+!MESSAGE [Info]	[fetchCompletions] Request 4e230c9c-94c2-46fc-8402-c50d101d9377 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 306.5868999999948ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:09.054
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:09.392
+!MESSAGE [Info]	[fetchCompletions] Request b2607a87-23cb-4aa9-b944-ccc8b9cfefc7 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 294.90849999990314ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:10.308
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:10.731
+!MESSAGE [Info]	[fetchCompletions] Request 3948d1e4-4f74-455f-987d-2d43b65db500 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 313.80099999997765ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:10.795
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:35.795
+!MESSAGE [Info]	[fetchCompletions] Request 25953a61-bef2-485a-a4a8-181f17ca324a at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 331.88400000007823ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:35.834
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:46.553
+!MESSAGE [Info]	[code-referencing] Calling Match
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:46.725
+!MESSAGE [Info]	[code-referencing] No match found
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:59.425
+!MESSAGE [Info]	[fetchCompletions] Request cc95491f-595b-4639-9231-56c1d1d1b516 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 553.3980000000447ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:02:59.554
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:03.662
+!MESSAGE [Info]	[fetchCompletions] Request 1c735e33-22eb-4474-976b-2730cf8fe0c8 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 295.1137999999337ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:03.754
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [stop]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:04.139
+!MESSAGE [Info]	[fetchCompletions] Request 894e93e1-f995-44a6-92ed-9d769581effe at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 337.3294000001624ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:04.254
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [null]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:04.499
+!MESSAGE [Info]	[fetchCompletions] Request bfacd731-2a58-42e6-884c-7d2549cedc44 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 295.21409999998286ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:04.663
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [null]
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:04.824
+!MESSAGE [Info]	[fetchCompletions] Request 455eef27-e717-4c68-860e-7275e0669634 at <https://proxy.individual.githubcopilot.com/v1/engines/gpt-41-copilot/completions> finished with 200 status after 321.56189999962226ms
+
+!ENTRY org.eclipse.lsp4e 1 0 2025-10-02 13:03:05.061
+!MESSAGE [Info]	[streamChoices] solution 0 returned. finish reason: [null]
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 13:03:30.973
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-10-02 13:03:34.535
+!MESSAGE Error in final launch sequence:
+
+Setup exceptions
+!STACK 1
+org.eclipse.core.runtime.CoreException: Setup exceptions
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:336)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-10-02 13:03:34.535
+!MESSAGE Setup exceptions
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2025-10-02 13:03:46.481
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 84000000; div: 42
