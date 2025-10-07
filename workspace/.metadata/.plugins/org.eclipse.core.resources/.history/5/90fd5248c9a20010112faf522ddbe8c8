@@ -33,17 +33,17 @@
 /* USER CODE BEGIN PTD */
 typedef struct
 {
-  uint32_t timestamp;
-  IKS4A1_MOTION_SENSOR_Axes_t acceleration;
-  IKS4A1_MOTION_SENSOR_Axes_t angular_velocity;
+    uint32_t timestamp;
+    IKS4A1_MOTION_SENSOR_Axes_t acceleration;
+    IKS4A1_MOTION_SENSOR_Axes_t angular_velocity;
 } sensors_data_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TIMEOUT_REQUEST 	1000 					// 1 second
-#define TIME_READ		3					// 3 seconds
-#define TIMEOUT_READ 		((uint32_t)TIME_READ*TIMEOUT_REQUEST) 	// in second
+#define BASE_TIME_TIM1		100					// in ms
+#define AMOUNT_DATA		    30					// amount of data to read
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,14 +52,12 @@ typedef struct
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi2;
-DMA_HandleTypeDef hdma_spi2_rx;
-DMA_HandleTypeDef hdma_spi2_tx;
+SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN PV */
-static sensors_data_t sensor_data[TIME_READ];
+static sensors_data_t sensor_data[AMOUNT_DATA] = { 0 };
 static volatile size_t data_ready = 0;
 static volatile size_t count_data = 0;
 /* USER CODE END PV */
@@ -67,16 +65,22 @@ static volatile size_t count_data = 0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
-static void MX_SPI2_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int _write( int file, char * ptr, int len )
+{
+    for( int i = 0; i < len; i++ )
+    {
+        ITM_SendChar( *ptr++ );
+    }
+    return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -108,107 +112,99 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_SPI2_Init();
   MX_TIM1_Init();
+  MX_SPI1_Init();
   MX_MEMS_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT (&htim1);
-  //  sd_mount();
-  //  sd_list_files();
-  //  sd_unmount();
+    HAL_TIM_Base_Start_IT( &htim1 );
+    /*sd_mount();
+    sd_list_files();
+    sd_unmount();*/
 
-  /*
-   sd_mount();
-   sd_read_file("F1/F1F2/File5.TXT", bufr, 50, &br);
-   printf("DATA from File:::: %s\n\n",bufr);
-   sd_unmount();
-   */
+    /*
+     sd_mount();
+     sd_read_file("F1/F1F2/File5.TXT", bufr, 50, &br);
+     printf("DATA from File:::: %s\n\n",bufr);
+     sd_unmount();
+     */
 
-  //  sd_mount();
-  //  sd_read_file("File1.TXT", bufr, 80, &br);
-  //  printf("DATA from File:::: %s\n\n",bufr);
-  //  sd_unmount();
-  //  sd_mount();
-  //  sd_write_file("FILE6.TXT", "This file is created by the cubeIDE\n");
-  //  sd_read_file("File6.txt", bufr, 80, &br);
-  //  printf("DATA from File:::: %s\n\n",bufr);
-  //  sd_list_files();
-  //  sd_unmount();
-  //#define max_records 20
-  //  CsvRecord myrecords[max_records];
-  //  int record_count = 0;
-  //  sd_mount();
-  //  sd_read_csv("F1/F1F2/File4.csv", myrecords, max_records, &record_count);
-  //  sd_unmount();
-  //    sd_mount();
-  //    sd_append_file("File6.txt", "This is Appended Text\n");
-  //    sd_read_file("File6.txt", bufr, 80, &br);
-  //    printf("DATA from File:::: %s\n\n",bufr);
-  //
-  //    sd_delete_file("File1.txt");
-  //    sd_list_files();
-  //    sd_unmount();
+    //  sd_mount();
+    //  sd_read_file("File1.TXT", bufr, 80, &br);
+    //  printf("DATA from File:::: %s\n\n",bufr);
+    //  sd_unmount();
+    //  sd_mount();
+    //  sd_write_file("FILE6.TXT", "This file is created by the cubeIDE\n");
+    //  sd_read_file("File6.txt", bufr, 80, &br);
+    //  printf("DATA from File:::: %s\n\n",bufr);
+    //  sd_list_files();
+    //  sd_unmount();
+    //#define max_records 20
+    //  CsvRecord myrecords[max_records];
+    //  int record_count = 0;
+    //  sd_mount();
+    //  sd_read_csv("F1/F1F2/File4.csv", myrecords, max_records, &record_count);
+    //  sd_unmount();
+    //    sd_mount();
+    //    sd_append_file("File6.txt", "This is Appended Text\n");
+    //    sd_read_file("File6.txt", bufr, 80, &br);
+    //    printf("DATA from File:::: %s\n\n",bufr);
+    //
+    //    sd_delete_file("File1.txt");
+    //    sd_list_files();
+    //    sd_unmount();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
+    while( 1 )
     {
     /* USER CODE END WHILE */
 
   MX_MEMS_Process();
     /* USER CODE BEGIN 3 */
-      if (data_ready)
-	{
-	  const char name_file[] =
-	    { "sensor_data.csv" };
-	  const char header_csv[] =
-	      "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n";
-	  // Save data to SD card
-	  sd_mount ();
-	  sd_write_file (name_file, header_csv); // Write header
+        if( data_ready )
+        {
+            const char name_file[] = { "sensor_data.csv" };
+            const char header_csv[] = "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n";
+            // Save data to SD card
+            sd_list_files();
+            sd_mount();
+            sd_write_file( name_file, header_csv ); // Write header
 
-	  for (size_t i = 0; i < TIME_READ; i++)
-	    {
-	      char line[128] =
-		{ 0 };
-	      snprintf (line, sizeof(line), "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n",
-			(unsigned long) sensor_data[i].timestamp,
-			(long) sensor_data[i].acceleration.x,
-			(long) sensor_data[i].acceleration.y,
-			(long) sensor_data[i].acceleration.z,
-			(long) sensor_data[i].angular_velocity.x,
-			(long) sensor_data[i].angular_velocity.y,
-			(long) sensor_data[i].angular_velocity.z);
-	      sd_append_file (name_file, line);
-	    }
-	  sd_unmount ();
-	}
-
-/*      if (data_ready) {
-        data_ready = 0;
-
-        sd_mount();
-        FIL file;
-        if (f_open(&file, "sensor_data.csv", FA_WRITE | FA_OPEN_APPEND) == FR_OK) {
-          if (f_size(&file) == 0) {
-            f_printf(&file, "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n");
-          }
-          for (size_t i = 0; i < TIME_READ; i++) {
-            f_printf(&file, "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n",
-                     (unsigned long)sensor_data[i].timestamp,
-                     (long)sensor_data[i].acceleration.x,
-                     (long)sensor_data[i].acceleration.y,
-                     (long)sensor_data[i].acceleration.z,
-                     (long)sensor_data[i].angular_velocity.x,
-                     (long)sensor_data[i].angular_velocity.y,
-                     (long)sensor_data[i].angular_velocity.z);
-          }
-          f_close(&file);
+            for( size_t i = 0; i < AMOUNT_DATA; i++ )
+            {
+                char line[128] = { 0 };
+                snprintf( line, sizeof( line ), "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n", (unsigned long) sensor_data[i].timestamp, (long) sensor_data[i].acceleration.x,
+                          (long) sensor_data[i].acceleration.y, (long) sensor_data[i].acceleration.z, (long) sensor_data[i].angular_velocity.x,
+                          (long) sensor_data[i].angular_velocity.y, (long) sensor_data[i].angular_velocity.z );
+                sd_append_file( name_file, line );
+            }
+            sd_unmount();
         }
-        sd_unmount();
-      }*/
+
+        /*      if (data_ready) {
+         data_ready = 0;
+
+         sd_mount();
+         FIL file;
+         if (f_open(&file, "sensor_data.csv", FA_WRITE | FA_OPEN_APPEND) == FR_OK) {
+         if (f_size(&file) == 0) {
+         f_printf(&file, "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n");
+         }
+         for (size_t i = 0; i < TIME_READ; i++) {
+         f_printf(&file, "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n",
+         (unsigned long)sensor_data[i].timestamp,
+         (long)sensor_data[i].acceleration.x,
+         (long)sensor_data[i].acceleration.y,
+         (long)sensor_data[i].acceleration.z,
+         (long)sensor_data[i].angular_velocity.x,
+         (long)sensor_data[i].angular_velocity.y,
+         (long)sensor_data[i].angular_velocity.z);
+         }
+         f_close(&file);
+         }
+         sd_unmount();
+         }*/
     }
   /* USER CODE END 3 */
 }
@@ -260,40 +256,40 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief SPI2 Initialization Function
+  * @brief SPI1 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_SPI2_Init(void)
+static void MX_SPI1_Init(void)
 {
 
-  /* USER CODE BEGIN SPI2_Init 0 */
+  /* USER CODE BEGIN SPI1_Init 0 */
 
-  /* USER CODE END SPI2_Init 0 */
+  /* USER CODE END SPI1_Init 0 */
 
-  /* USER CODE BEGIN SPI2_Init 1 */
+  /* USER CODE BEGIN SPI1_Init 1 */
 
-  /* USER CODE END SPI2_Init 1 */
-  /* SPI2 parameter configuration*/
-  hspi2.Instance = SPI2;
-  hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
-  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi2.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi2) != HAL_OK)
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN SPI2_Init 2 */
+  /* USER CODE BEGIN SPI1_Init 2 */
 
-  /* USER CODE END SPI2_Init 2 */
+  /* USER CODE END SPI1_Init 2 */
 
 }
 
@@ -318,10 +314,10 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 8399;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 0;
+  htim1.Init.Period = 999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
   {
     Error_Handler();
@@ -340,25 +336,6 @@ static void MX_TIM1_Init(void)
   /* USER CODE BEGIN TIM1_Init 2 */
 
   /* USER CODE END TIM1_Init 2 */
-
-}
-
-/**
-  * Enable DMA controller clock
-  */
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Stream3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
-  /* DMA1_Stream4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Stream4_IRQn);
 
 }
 
@@ -397,40 +374,37 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void
-HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef *htim)
+void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
 {
-  static uint32_t prev = 0;
-  if (htim->Instance == TIM1)  // Check if the interrupt comes from TIM1
+
+    if( htim->Instance == TIM1 )  // Check if the interrupt comes from TIM1
     {
-      __HAL_TIM_SET_AUTORELOAD(htim, 999); // Set the time to 100ms interrupt
-      // Your code to be executed every second
-      if (count_data < TIME_READ)
-	{
-	  if (IKS4A1_MOTION_SENSOR_GetAxes (
-	      IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, &sensor_data[count_data].acceleration) != 0)
-	    {
-	      // Handle error
-	    }
-	  if (IKS4A1_MOTION_SENSOR_GetAxes (
-	      IKS4A1_LSM6DSV16X_0, MOTION_GYRO, &sensor_data[count_data].angular_velocity) != 0)
-	    {
-	      // Handle error
-	    }
-	  uint32_t now = HAL_GetTick ();
-	  sensor_data[count_data].timestamp = (prev == 0) ? 0 : (now - prev);
-	  prev = now;
-	  count_data++;
-	  if (count_data >= TIME_READ)
-	    {
-	      data_ready = 1;           // avisa a thread principal
-	    }
+        // Your code to be executed every second
+        if( count_data < AMOUNT_DATA )
+        {
+            if( IKS4A1_MOTION_SENSOR_GetAxes(
+            IKS4A1_LSM6DSV16X_0,
+                                              MOTION_ACCELERO, &sensor_data[count_data].acceleration ) != 0 )
+            {
+                // Handle error
+            }
+            if( IKS4A1_MOTION_SENSOR_GetAxes(
+            IKS4A1_LSM6DSV16X_0,
+                                              MOTION_GYRO, &sensor_data[count_data].angular_velocity ) != 0 )
+            {
+                // Handle error
+            }
 
-	}
-      else
-	{
+            sensor_data[count_data].timestamp = count_data * BASE_TIME_TIM1; //now - prev;
+            printf("Timestamp: %lu ms\n",
+                   (unsigned long) sensor_data[count_data].timestamp);
+            count_data++;
 
-	}
+        }
+        else
+        {
+            data_ready = 1;           // avisa a thread principal
+        }
     }
 }
 /* USER CODE END 4 */
@@ -442,9 +416,9 @@ HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq ();
-  while (1)
+    /* User can add his own implementation to report the HAL error return state */
+    __disable_irq();
+    while( 1 )
     {
     }
   /* USER CODE END Error_Handler_Debug */
