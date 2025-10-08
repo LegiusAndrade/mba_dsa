@@ -43,7 +43,7 @@ typedef struct
 /* USER CODE BEGIN PD */
 #define BASE_TIME_TIM1		100					                        // in ms
 #define TIME_READ_IN_SECONDS  300				                      // total time to read in seconds
-#define TIME_READ         (TIME_READ_IN_SECONDS*100)				  // total time to read in ms
+#define TIME_READ         (TIME_READ_IN_SECONDS*1000)				  // total time to read in ms
 #define AMOUNT_DATA		    (TIME_READ/BASE_TIME_TIM1)					// amount of data to read
 
 typedef enum
@@ -51,7 +51,13 @@ typedef enum
     READY = 0,
     ACQUIRING,
     COMPLETE
-} e_LED_STATUS;
+} e_STATUS;
+
+typedef enum
+{
+    _BUTTON_RELEASED = 0,
+    _BUTTON_PRESSED
+} e_BUTTON_STATE;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -69,8 +75,11 @@ static sensors_data_t sensor_data[AMOUNT_DATA] = { 0 };
 static volatile size_t data_ready = 0;
 static volatile size_t count_data = 0;
 
-static volatile uint32_t count_led_status = 0;
-static e_LED_STATUS led_status = READY;
+static volatile size_t count_led_status = 0;
+static e_STATUS status = READY;
+
+static volatile size_t debounce_button = 0;
+static e_BUTTON_STATE button_state = _BUTTON_RELEASED;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -171,7 +180,7 @@ int main( void )
     {
         /* USER CODE END WHILE */
 
-        MX_MEMS_Process();
+        //MX_MEMS_Process();
         /* USER CODE BEGIN 3 */
         if( data_ready )
         {
@@ -399,40 +408,82 @@ static void MX_GPIO_Init( void )
 }
 
 /* USER CODE BEGIN 4 */
+void Check_Button( void )
+{
+    if( HAL_GPIO_ReadPin( BUTTON_D8_GPIO_Port, BUTTON_D8_Pin ) == GPIO_PIN_RESET ) // Button pressed
+    {
+        debounce_button++;
+        if( button_state == _BUTTON_RELEASED )
+        {
+            if( debounce_button >= 5 ) // debounce time ~500ms
+            {
+                button_state = _BUTTON_PRESSED;
+                debounce_button = 0;
+                {
+                    if( status == READY )
+                    {
+                        status = ACQUIRING;
+                        count_data = 0;
+                        data_ready = 0;
+                    }
+                    else if( status == ACQUIRING )
+                    {
+                        status = COMPLETE;
+                    }
+                    count_led_status = 0;
+                }
+            }
+        }
+        else
+        {
 
+        }
+
+    }
+    else
+    {
+        debounce_button = 0;
+        button_state = _BUTTON_RELEASED;
+    }
+
+}
 void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
 {
 
     if( htim->Instance == TIM1 )  // Check if the interrupt comes from TIM1
     {
-        // Your code to be executed every second
-        if( count_data < AMOUNT_DATA )
+        if( status == ACQUIRING )
         {
-            if( IKS4A1_MOTION_SENSOR_GetAxes(
-            IKS4A1_LSM6DSV16X_0,
-                                              MOTION_ACCELERO, &sensor_data[count_data].acceleration ) != 0 )
+            // Your code to be executed every second
+            if( count_data < AMOUNT_DATA )
             {
-                // Handle error
+                if( IKS4A1_MOTION_SENSOR_GetAxes(
+                IKS4A1_LSM6DSV16X_0,
+                                                  MOTION_ACCELERO, &sensor_data[count_data].acceleration ) != 0 )
+                {
+                    // Handle error
+                }
+                if( IKS4A1_MOTION_SENSOR_GetAxes(
+                IKS4A1_LSM6DSV16X_0,
+                                                  MOTION_GYRO, &sensor_data[count_data].angular_velocity ) != 0 )
+                {
+                    // Handle error
+                }
+
+                sensor_data[count_data].timestamp = count_data * BASE_TIME_TIM1; //now - prev;
+                printf( "Timestamp: %lu ms\n", (unsigned long) sensor_data[count_data].timestamp );
+                count_data++;
+
             }
-            if( IKS4A1_MOTION_SENSOR_GetAxes(
-            IKS4A1_LSM6DSV16X_0,
-                                              MOTION_GYRO, &sensor_data[count_data].angular_velocity ) != 0 )
+            else
             {
-                // Handle error
+                status = COMPLETE;
+                data_ready = 1;           // avisa a thread principal
             }
-
-            sensor_data[count_data].timestamp = count_data * BASE_TIME_TIM1; //now - prev;
-            printf( "Timestamp: %lu ms\n", (unsigned long) sensor_data[count_data].timestamp );
-            count_data++;
-
-        }
-        else
-        {
-            data_ready = 1;           // avisa a thread principal
         }
 
         count_led_status++;
-        switch( led_status )
+        switch( status )
         {
             case READY:
             {
@@ -444,7 +495,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                 break;
             case ACQUIRING:
             {
-                if( count_led_status >= 5 ) // toggle every second
+                if( count_led_status >= 3 ) // toggle every second
                 {
                     count_led_status = 0;
                 }
@@ -463,6 +514,8 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
         {
             HAL_GPIO_TogglePin( LED_STATUS_D7_GPIO_Port, LED_STATUS_D7_Pin );
         }
+
+        Check_Button();
 
     }
 }
