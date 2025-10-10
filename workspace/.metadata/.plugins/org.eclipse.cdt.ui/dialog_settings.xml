@@ -23,4 +23,8 @@
 			<item value="SD_CS"/>
 		</list>
 	</section>
+	<section name="RenameInformationPopup">
+	</section>
+	<section name="CRenameRefactoringInputPage">
+	</section>
 </section>

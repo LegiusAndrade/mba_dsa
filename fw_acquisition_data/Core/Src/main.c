@@ -182,13 +182,14 @@ int main( void )
 
         //MX_MEMS_Process();
         /* USER CODE BEGIN 3 */
+
         if( data_ready )
         {
             const char name_file[] = { "sensor_data.csv" };
             const char header_csv[] = "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n";
             // Save data to SD card
-            sd_list_files();
             sd_mount();
+            sd_list_files();
             sd_write_file( name_file, header_csv ); // Write header
 
             for( size_t i = 0; i < AMOUNT_DATA; i++ )
@@ -200,6 +201,7 @@ int main( void )
                 sd_append_file( name_file, line );
             }
             sd_unmount();
+            while(1);
         }
 
         /*      if (data_ready) {

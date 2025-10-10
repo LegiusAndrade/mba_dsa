@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00019284  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0003d4d8  00000000  00000000  000192b4  2**0
+ 12 .debug_info   0003d4de  00000000  00000000  000192b4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00006316  00000000  00000000  0005678c  2**0
+ 13 .debug_abbrev 00006359  00000000  00000000  00056792  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000036d8  00000000  00000000  0005caa8  2**3
+ 14 .debug_aranges 000036d8  00000000  00000000  0005caf0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00002aa0  00000000  00000000  00060180  2**0
+ 15 .debug_rnglists 00002aa0  00000000  00000000  000601c8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001f1ba  00000000  00000000  00062c20  2**0
+ 16 .debug_macro  0001f1ba  00000000  00000000  00062c68  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00037478  00000000  00000000  00081dda  2**0
+ 17 .debug_line   0003745f  00000000  00000000  00081e22  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000af3ad  00000000  00000000  000b9252  2**0
+ 18 .debug_str    000af3ad  00000000  00000000  000b9281  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001685ff  2**0
+ 19 .comment      00000043  00000000  00000000  0016862e  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000fb10  00000000  00000000  00168644  2**2
+ 20 .debug_frame  0000fb10  00000000  00000000  00168674  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000077  00000000  00000000  00178154  2**0
+ 21 .debug_line_str 00000077  00000000  00000000  00178184  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1420,11 +1420,11 @@ int main( void )
     HAL_TIM_Base_Start_IT( &htim1 );
  800104a:	484f      	ldr	r0, [pc, #316]	@ (8001188 <main+0x15c>)
  800104c:	f00e fb14 	bl	800f678 <HAL_TIM_Base_Start_IT>
-    {
         /* USER CODE END WHILE */
 
         //MX_MEMS_Process();
         /* USER CODE BEGIN 3 */
+
         if( data_ready )
  8001050:	4b4e      	ldr	r3, [pc, #312]	@ (800118c <main+0x160>)
  8001052:	681b      	ldr	r3, [r3, #0]
@@ -1449,10 +1449,10 @@ int main( void )
  8001078:	e895 0003 	ldmia.w	r5, {r0, r1}
  800107c:	e884 0003 	stmia.w	r4, {r0, r1}
             // Save data to SD card
-            sd_list_files();
- 8001080:	f000 fe08 	bl	8001c94 <sd_list_files>
             sd_mount();
- 8001084:	f000 fbd2 	bl	800182c <sd_mount>
+ 8001080:	f000 fbd4 	bl	800182c <sd_mount>
+            sd_list_files();
+ 8001084:	f000 fe06 	bl	8001c94 <sd_list_files>
             sd_write_file( name_file, header_csv ); // Write header
  8001088:	f107 020c 	add.w	r2, r7, #12
  800108c:	f107 03c4 	add.w	r3, r7, #196	@ 0xc4
@@ -1569,9 +1569,9 @@ int main( void )
             }
             sd_unmount();
  8001180:	f000 fbc8 	bl	8001914 <sd_unmount>
-        if( data_ready )
- 8001184:	e764      	b.n	8001050 <main+0x24>
- 8001186:	bf00      	nop
+            while(1);
+ 8001184:	bf00      	nop
+ 8001186:	e7fd      	b.n	8001184 <main+0x158>
  8001188:	200002f8 	.word	0x200002f8
  800118c:	20014b60 	.word	0x20014b60
  8001190:	080163c8 	.word	0x080163c8
@@ -2636,18 +2636,18 @@ DRESULT SD_disk_ioctl(BYTE pdrv, BYTE cmd, void *buff) {
  80017c2:	4770      	bx	lr
 
 080017c4 <sd_get_space_kb>:
-//		printf("Format failed: f_mkfs returned %d\r\n", res);
 //	}
 //		return res;
 //}
 
-int sd_get_space_kb(void) {
+int sd_get_space_kb( void )
+{
  80017c4:	b580      	push	{r7, lr}
  80017c6:	b088      	sub	sp, #32
  80017c8:	af00      	add	r7, sp, #0
-	FATFS *pfs;
-	DWORD fre_clust, tot_sect, fre_sect, total_kb, free_kb;
-	FRESULT res = f_getfree(sd_path, &fre_clust, &pfs);
+    FATFS *pfs;
+    DWORD fre_clust, tot_sect, fre_sect, total_kb, free_kb;
+    FRESULT res = f_getfree( sd_path, &fre_clust, &pfs );
  80017ca:	f107 0208 	add.w	r2, r7, #8
  80017ce:	1d3b      	adds	r3, r7, #4
  80017d0:	4619      	mov	r1, r3
@@ -2655,14 +2655,15 @@ int sd_get_space_kb(void) {
  80017d4:	f012 fac8 	bl	8013d68 <f_getfree>
  80017d8:	4603      	mov	r3, r0
  80017da:	77fb      	strb	r3, [r7, #31]
-	if (res != FR_OK) return res;
+    if( res != FR_OK )
  80017dc:	7ffb      	ldrb	r3, [r7, #31]
  80017de:	2b00      	cmp	r3, #0
  80017e0:	d001      	beq.n	80017e6 <sd_get_space_kb+0x22>
+        return res;
  80017e2:	7ffb      	ldrb	r3, [r7, #31]
  80017e4:	e01a      	b.n	800181c <sd_get_space_kb+0x58>
 
-	tot_sect = (pfs->n_fatent - 2) * pfs->csize;
+    tot_sect = ( pfs->n_fatent - 2 ) * pfs->csize;
  80017e6:	68bb      	ldr	r3, [r7, #8]
  80017e8:	699b      	ldr	r3, [r3, #24]
  80017ea:	3b02      	subs	r3, #2
@@ -2670,27 +2671,27 @@ int sd_get_space_kb(void) {
  80017ee:	8952      	ldrh	r2, [r2, #10]
  80017f0:	fb02 f303 	mul.w	r3, r2, r3
  80017f4:	61bb      	str	r3, [r7, #24]
-	fre_sect = fre_clust * pfs->csize;
+    fre_sect = fre_clust * pfs->csize;
  80017f6:	68bb      	ldr	r3, [r7, #8]
  80017f8:	895b      	ldrh	r3, [r3, #10]
  80017fa:	461a      	mov	r2, r3
  80017fc:	687b      	ldr	r3, [r7, #4]
  80017fe:	fb02 f303 	mul.w	r3, r2, r3
  8001802:	617b      	str	r3, [r7, #20]
-	total_kb = tot_sect / 2;
+    total_kb = tot_sect / 2;
  8001804:	69bb      	ldr	r3, [r7, #24]
  8001806:	085b      	lsrs	r3, r3, #1
  8001808:	613b      	str	r3, [r7, #16]
-	free_kb = fre_sect / 2;
+    free_kb = fre_sect / 2;
  800180a:	697b      	ldr	r3, [r7, #20]
  800180c:	085b      	lsrs	r3, r3, #1
  800180e:	60fb      	str	r3, [r7, #12]
-	printf("💾 Total: %lu KB, Free: %lu KB\r\n", total_kb, free_kb);
+    printf( "💾 Total: %lu KB, Free: %lu KB\r\n", total_kb, free_kb );
  8001810:	68fa      	ldr	r2, [r7, #12]
  8001812:	6939      	ldr	r1, [r7, #16]
  8001814:	4804      	ldr	r0, [pc, #16]	@ (8001828 <sd_get_space_kb+0x64>)
  8001816:	f012 fe17 	bl	8014448 <iprintf>
-	return FR_OK;
+    return FR_OK;
  800181a:	2300      	movs	r3, #0
 }
  800181c:	4618      	mov	r0, r3
@@ -2702,81 +2703,84 @@ int sd_get_space_kb(void) {
 
 0800182c <sd_mount>:
 
-int sd_mount(void) {
+int sd_mount( void )
+{
  800182c:	b580      	push	{r7, lr}
  800182e:	b082      	sub	sp, #8
  8001830:	af00      	add	r7, sp, #0
-	FRESULT res;
-	extern uint8_t sd_is_sdhc(void);
+    FRESULT res;
+    extern uint8_t sd_is_sdhc( void );
 
-	printf("Linking SD driver...\r\n");
+    printf( "Linking SD driver...\r\n" );
  8001832:	4829      	ldr	r0, [pc, #164]	@ (80018d8 <sd_mount+0xac>)
  8001834:	f012 fe70 	bl	8014518 <puts>
-	if (FATFS_LinkDriver(&SD_Driver, sd_path) != 0) {
+    if( FATFS_LinkDriver( &SD_Driver, sd_path ) != 0 )
  8001838:	4928      	ldr	r1, [pc, #160]	@ (80018dc <sd_mount+0xb0>)
  800183a:	4829      	ldr	r0, [pc, #164]	@ (80018e0 <sd_mount+0xb4>)
  800183c:	f012 fb96 	bl	8013f6c <FATFS_LinkDriver>
  8001840:	4603      	mov	r3, r0
  8001842:	2b00      	cmp	r3, #0
  8001844:	d004      	beq.n	8001850 <sd_mount+0x24>
-		printf("FATFS_LinkDriver failed\n");
+    {
+        printf( "FATFS_LinkDriver failed\n" );
  8001846:	4827      	ldr	r0, [pc, #156]	@ (80018e4 <sd_mount+0xb8>)
  8001848:	f012 fe66 	bl	8014518 <puts>
-		return FR_DISK_ERR;
+        return FR_DISK_ERR;
  800184c:	2301      	movs	r3, #1
  800184e:	e03f      	b.n	80018d0 <sd_mount+0xa4>
-	}
+    }
 
-	printf("Initializing disk...\r\n");
+    printf( "Initializing disk...\r\n" );
  8001850:	4825      	ldr	r0, [pc, #148]	@ (80018e8 <sd_mount+0xbc>)
  8001852:	f012 fe61 	bl	8014518 <puts>
-	DSTATUS stat = disk_initialize(0);
+    DSTATUS stat = disk_initialize( 0 );
  8001856:	2000      	movs	r0, #0
  8001858:	f00f f870 	bl	801093c <disk_initialize>
  800185c:	4603      	mov	r3, r0
  800185e:	71fb      	strb	r3, [r7, #7]
-	if (stat != 0) {
+    if( stat != 0 )
  8001860:	79fb      	ldrb	r3, [r7, #7]
  8001862:	2b00      	cmp	r3, #0
  8001864:	d00c      	beq.n	8001880 <sd_mount+0x54>
-		printf("disk_initialize failed: 0x%02X\n", stat);
+    {
+        printf( "disk_initialize failed: 0x%02X\n", stat );
  8001866:	79fb      	ldrb	r3, [r7, #7]
  8001868:	4619      	mov	r1, r3
  800186a:	4820      	ldr	r0, [pc, #128]	@ (80018ec <sd_mount+0xc0>)
  800186c:	f012 fdec 	bl	8014448 <iprintf>
-		printf("FR_NOT_READY\tTry Hard Reset or Check Connection/Power\r\n");
+        printf( "FR_NOT_READY\tTry Hard Reset or Check Connection/Power\r\n" );
  8001870:	481f      	ldr	r0, [pc, #124]	@ (80018f0 <sd_mount+0xc4>)
  8001872:	f012 fe51 	bl	8014518 <puts>
-		printf("Make sure \"MX_FATFS_Init\" is not being called in the main function\n"\
+        printf( "Make sure \"MX_FATFS_Init\" is not being called in the main function\n"
  8001876:	481f      	ldr	r0, [pc, #124]	@ (80018f4 <sd_mount+0xc8>)
  8001878:	f012 fe4e 	bl	8014518 <puts>
-				"You need to disable its call in CubeMX->Project Manager->Advance Settings->Uncheck Generate code for MX_FATFS_Init\r\n");
-		return FR_NOT_READY;
+                "You need to disable its call in CubeMX->Project Manager->Advance Settings->Uncheck Generate code for MX_FATFS_Init\r\n" );
+        return FR_NOT_READY;
  800187c:	2303      	movs	r3, #3
  800187e:	e027      	b.n	80018d0 <sd_mount+0xa4>
-	}
+    }
 
-	printf("Attempting mount at %s...\r\n", sd_path);
+    printf( "Attempting mount at %s...\r\n", sd_path );
  8001880:	4916      	ldr	r1, [pc, #88]	@ (80018dc <sd_mount+0xb0>)
  8001882:	481d      	ldr	r0, [pc, #116]	@ (80018f8 <sd_mount+0xcc>)
  8001884:	f012 fde0 	bl	8014448 <iprintf>
-	res = f_mount(&fs, sd_path, 1);
+    res = f_mount( &fs, sd_path, 1 );
  8001888:	2201      	movs	r2, #1
  800188a:	4914      	ldr	r1, [pc, #80]	@ (80018dc <sd_mount+0xb0>)
  800188c:	481b      	ldr	r0, [pc, #108]	@ (80018fc <sd_mount+0xd0>)
  800188e:	f011 fb3f 	bl	8012f10 <f_mount>
  8001892:	4603      	mov	r3, r0
  8001894:	71bb      	strb	r3, [r7, #6]
-	if (res == FR_OK)
+    if( res == FR_OK )
  8001896:	79bb      	ldrb	r3, [r7, #6]
  8001898:	2b00      	cmp	r3, #0
  800189a:	d113      	bne.n	80018c4 <sd_mount+0x98>
-	{
-		printf("SD card mounted successfully at %s\r\n", sd_path);
+    {
+        printf( "SD card mounted successfully at %s\r\n", sd_path );
  800189c:	490f      	ldr	r1, [pc, #60]	@ (80018dc <sd_mount+0xb0>)
  800189e:	4818      	ldr	r0, [pc, #96]	@ (8001900 <sd_mount+0xd4>)
  80018a0:	f012 fdd2 	bl	8014448 <iprintf>
-		printf("Card Type: %s\r\n", sd_is_sdhc() ? "SDHC/SDXC" : "SDSC");
+        printf( "Card Type: %s\r\n", sd_is_sdhc() ? "SDHC/SDXC" : "SDSC" );
  80018a4:	f000 fac2 	bl	8001e2c <sd_is_sdhc>
  80018a8:	4603      	mov	r3, r0
  80018aa:	2b00      	cmp	r3, #0
@@ -2788,23 +2792,23 @@ int sd_mount(void) {
  80018b6:	4815      	ldr	r0, [pc, #84]	@ (800190c <sd_mount+0xe0>)
  80018b8:	f012 fdc6 	bl	8014448 <iprintf>
 
-		// Capacity and free space reporting
-		sd_get_space_kb();
+        // Capacity and free space reporting
+        sd_get_space_kb();
  80018bc:	f7ff ff82 	bl	80017c4 <sd_get_space_kb>
-		return FR_OK;
+        return FR_OK;
  80018c0:	2300      	movs	r3, #0
  80018c2:	e005      	b.n	80018d0 <sd_mount+0xa4>
+//			printf("Mount failed even after format: %d\r\n", res);
 //		}
 //		return res;
 //	}
-
-	// Any other mount error
-	printf("Mount failed with code: %d\r\n", res);
+// Any other mount error
+    printf( "Mount failed with code: %d\r\n", res );
  80018c4:	79bb      	ldrb	r3, [r7, #6]
  80018c6:	4619      	mov	r1, r3
  80018c8:	4811      	ldr	r0, [pc, #68]	@ (8001910 <sd_mount+0xe4>)
  80018ca:	f012 fdbd 	bl	8014448 <iprintf>
-	return res;
+    return res;
  80018ce:	79bb      	ldrb	r3, [r7, #6]
 }
  80018d0:	4618      	mov	r0, r3
@@ -2829,19 +2833,19 @@ int sd_mount(void) {
 
 08001914 <sd_unmount>:
 
-
-int sd_unmount(void) {
+int sd_unmount( void )
+{
  8001914:	b580      	push	{r7, lr}
  8001916:	b082      	sub	sp, #8
  8001918:	af00      	add	r7, sp, #0
-	FRESULT res = f_mount(NULL, sd_path, 1);
+    FRESULT res = f_mount( NULL, sd_path, 1 );
  800191a:	2201      	movs	r2, #1
  800191c:	490a      	ldr	r1, [pc, #40]	@ (8001948 <sd_unmount+0x34>)
  800191e:	2000      	movs	r0, #0
  8001920:	f011 faf6 	bl	8012f10 <f_mount>
  8001924:	4603      	mov	r3, r0
  8001926:	71fb      	strb	r3, [r7, #7]
-	printf("SD card unmounted: %s\r\n", (res == FR_OK) ? "OK" : "Failed");
+    printf( "SD card unmounted: %s\r\n", ( res == FR_OK ) ? "OK" : "Failed" );
  8001928:	79fb      	ldrb	r3, [r7, #7]
  800192a:	2b00      	cmp	r3, #0
  800192c:	d101      	bne.n	8001932 <sd_unmount+0x1e>
@@ -2851,7 +2855,7 @@ int sd_unmount(void) {
  8001934:	4619      	mov	r1, r3
  8001936:	4807      	ldr	r0, [pc, #28]	@ (8001954 <sd_unmount+0x40>)
  8001938:	f012 fd86 	bl	8014448 <iprintf>
-	return res;
+    return res;
  800193c:	79fb      	ldrb	r3, [r7, #7]
 }
  800193e:	4618      	mov	r0, r3
@@ -2866,7 +2870,8 @@ int sd_unmount(void) {
 
 08001958 <sd_write_file>:
 
-int sd_write_file(const char *filename, const char *text) {
+int sd_write_file( const char * filename, const char * text )
+{
  8001958:	b590      	push	{r4, r7, lr}
  800195a:	f5ad 7d11 	sub.w	sp, sp, #580	@ 0x244
  800195e:	af00      	add	r7, sp, #0
@@ -2876,9 +2881,9 @@ int sd_write_file(const char *filename, const char *text) {
  800196a:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  800196e:	f5a3 7310 	sub.w	r3, r3, #576	@ 0x240
  8001972:	6019      	str	r1, [r3, #0]
-	FIL file;
-	UINT bw;
-	FRESULT res = f_open(&file, filename, FA_CREATE_ALWAYS | FA_WRITE);
+    FIL file;
+    UINT bw;
+    FRESULT res = f_open( &file, filename, FA_CREATE_ALWAYS | FA_WRITE );
  8001974:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  8001978:	f5a3 730f 	sub.w	r3, r3, #572	@ 0x23c
  800197c:	f107 000c 	add.w	r0, r7, #12
@@ -2887,14 +2892,15 @@ int sd_write_file(const char *filename, const char *text) {
  8001984:	f011 fb0a 	bl	8012f9c <f_open>
  8001988:	4603      	mov	r3, r0
  800198a:	f887 323f 	strb.w	r3, [r7, #575]	@ 0x23f
-	if (res != FR_OK) return res;
+    if( res != FR_OK )
  800198e:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  8001992:	2b00      	cmp	r3, #0
  8001994:	d002      	beq.n	800199c <sd_write_file+0x44>
+        return res;
  8001996:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  800199a:	e03e      	b.n	8001a1a <sd_write_file+0xc2>
 
-	res = f_write(&file, text, strlen(text), &bw);
+    res = f_write( &file, text, strlen( text ), &bw );
  800199c:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  80019a0:	f5a3 7310 	sub.w	r3, r3, #576	@ 0x240
  80019a4:	6818      	ldr	r0, [r3, #0]
@@ -2909,11 +2915,11 @@ int sd_write_file(const char *filename, const char *text) {
  80019c0:	f011 fcb6 	bl	8013330 <f_write>
  80019c4:	4603      	mov	r3, r0
  80019c6:	f887 323f 	strb.w	r3, [r7, #575]	@ 0x23f
-	f_close(&file);
+    f_close( &file );
  80019ca:	f107 030c 	add.w	r3, r7, #12
  80019ce:	4618      	mov	r0, r3
  80019d0:	f011 fea1 	bl	8013716 <f_close>
-	printf("Write %u bytes to %s\r\n", bw, filename);
+    printf( "Write %u bytes to %s\r\n", bw, filename );
  80019d4:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  80019d8:	f5a3 730e 	sub.w	r3, r3, #568	@ 0x238
  80019dc:	6819      	ldr	r1, [r3, #0]
@@ -2922,7 +2928,7 @@ int sd_write_file(const char *filename, const char *text) {
  80019e6:	681a      	ldr	r2, [r3, #0]
  80019e8:	480e      	ldr	r0, [pc, #56]	@ (8001a24 <sd_write_file+0xcc>)
  80019ea:	f012 fd2d 	bl	8014448 <iprintf>
-	return (res == FR_OK && bw == strlen(text)) ? FR_OK : FR_DISK_ERR;
+    return ( res == FR_OK && bw == strlen( text ) ) ? FR_OK : FR_DISK_ERR;
  80019ee:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  80019f2:	2b00      	cmp	r3, #0
  80019f4:	d10e      	bne.n	8001a14 <sd_write_file+0xbc>
@@ -2948,7 +2954,8 @@ int sd_write_file(const char *filename, const char *text) {
 
 08001a28 <sd_append_file>:
 
-int sd_append_file(const char *filename, const char *text) {
+int sd_append_file( const char * filename, const char * text )
+{
  8001a28:	b590      	push	{r4, r7, lr}
  8001a2a:	f5ad 7d11 	sub.w	sp, sp, #580	@ 0x244
  8001a2e:	af00      	add	r7, sp, #0
@@ -2958,9 +2965,9 @@ int sd_append_file(const char *filename, const char *text) {
  8001a3a:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  8001a3e:	f5a3 7310 	sub.w	r3, r3, #576	@ 0x240
  8001a42:	6019      	str	r1, [r3, #0]
-	FIL file;
-	UINT bw;
-	FRESULT res = f_open(&file, filename, FA_OPEN_ALWAYS | FA_WRITE);
+    FIL file;
+    UINT bw;
+    FRESULT res = f_open( &file, filename, FA_OPEN_ALWAYS | FA_WRITE );
  8001a44:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  8001a48:	f5a3 730f 	sub.w	r3, r3, #572	@ 0x23c
  8001a4c:	f107 000c 	add.w	r0, r7, #12
@@ -2969,14 +2976,15 @@ int sd_append_file(const char *filename, const char *text) {
  8001a54:	f011 faa2 	bl	8012f9c <f_open>
  8001a58:	4603      	mov	r3, r0
  8001a5a:	f887 323f 	strb.w	r3, [r7, #575]	@ 0x23f
-	if (res != FR_OK) return res;
+    if( res != FR_OK )
  8001a5e:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  8001a62:	2b00      	cmp	r3, #0
  8001a64:	d002      	beq.n	8001a6c <sd_append_file+0x44>
+        return res;
  8001a66:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  8001a6a:	e058      	b.n	8001b1e <sd_append_file+0xf6>
 
-	res = f_lseek(&file, f_size(&file));
+    res = f_lseek( &file, f_size( &file ) );
  8001a6c:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  8001a70:	f5a3 730d 	sub.w	r3, r3, #564	@ 0x234
  8001a74:	68da      	ldr	r2, [r3, #12]
@@ -2986,20 +2994,21 @@ int sd_append_file(const char *filename, const char *text) {
  8001a7e:	f011 fe74 	bl	801376a <f_lseek>
  8001a82:	4603      	mov	r3, r0
  8001a84:	f887 323f 	strb.w	r3, [r7, #575]	@ 0x23f
-	if (res != FR_OK) {
+    if( res != FR_OK )
  8001a88:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  8001a8c:	2b00      	cmp	r3, #0
  8001a8e:	d007      	beq.n	8001aa0 <sd_append_file+0x78>
-		f_close(&file);
+    {
+        f_close( &file );
  8001a90:	f107 030c 	add.w	r3, r7, #12
  8001a94:	4618      	mov	r0, r3
  8001a96:	f011 fe3e 	bl	8013716 <f_close>
-		return res;
+        return res;
  8001a9a:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  8001a9e:	e03e      	b.n	8001b1e <sd_append_file+0xf6>
-	}
+    }
 
-	res = f_write(&file, text, strlen(text), &bw);
+    res = f_write( &file, text, strlen( text ), &bw );
  8001aa0:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  8001aa4:	f5a3 7310 	sub.w	r3, r3, #576	@ 0x240
  8001aa8:	6818      	ldr	r0, [r3, #0]
@@ -3014,11 +3023,11 @@ int sd_append_file(const char *filename, const char *text) {
  8001ac4:	f011 fc34 	bl	8013330 <f_write>
  8001ac8:	4603      	mov	r3, r0
  8001aca:	f887 323f 	strb.w	r3, [r7, #575]	@ 0x23f
-	f_close(&file);
+    f_close( &file );
  8001ace:	f107 030c 	add.w	r3, r7, #12
  8001ad2:	4618      	mov	r0, r3
  8001ad4:	f011 fe1f 	bl	8013716 <f_close>
-	printf("Appended %u bytes to %s\r\n", bw, filename);
+    printf( "Appended %u bytes to %s\r\n", bw, filename );
  8001ad8:	f507 7310 	add.w	r3, r7, #576	@ 0x240
  8001adc:	f5a3 730e 	sub.w	r3, r3, #568	@ 0x238
  8001ae0:	6819      	ldr	r1, [r3, #0]
@@ -3027,7 +3036,7 @@ int sd_append_file(const char *filename, const char *text) {
  8001aea:	681a      	ldr	r2, [r3, #0]
  8001aec:	480e      	ldr	r0, [pc, #56]	@ (8001b28 <sd_append_file+0x100>)
  8001aee:	f012 fcab 	bl	8014448 <iprintf>
-	return (res == FR_OK && bw == strlen(text)) ? FR_OK : FR_DISK_ERR;
+    return ( res == FR_OK && bw == strlen( text ) ) ? FR_OK : FR_DISK_ERR;
  8001af2:	f897 323f 	ldrb.w	r3, [r7, #575]	@ 0x23f
  8001af6:	2b00      	cmp	r3, #0
  8001af8:	d10e      	bne.n	8001b18 <sd_append_file+0xf0>
@@ -3052,12 +3061,12 @@ int sd_append_file(const char *filename, const char *text) {
  8001b28:	08016664 	.word	0x08016664
 
 08001b2c <sd_list_directory_recursive>:
-	FRESULT res = f_mkdir(path);
-	printf("Create directory %s: %s\r\n", path, (res == FR_OK ? "OK" : "Failed"));
-	return res;
+    printf( "Create directory %s: %s\r\n", path, ( res == FR_OK ? "OK" : "Failed" ) );
+    return res;
 }
 
-void sd_list_directory_recursive(const char *path, int depth) {
+void sd_list_directory_recursive( const char * path, int depth )
+{
  8001b2c:	b580      	push	{r7, lr}
  8001b2e:	b0fa      	sub	sp, #488	@ 0x1e8
  8001b30:	af02      	add	r7, sp, #8
@@ -3067,9 +3076,9 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001b3c:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001b40:	f5a3 73f0 	sub.w	r3, r3, #480	@ 0x1e0
  8001b44:	6019      	str	r1, [r3, #0]
-	DIR dir;
-	FILINFO fno;
-	FRESULT res = f_opendir(&dir, path);
+    DIR dir;
+    FILINFO fno;
+    FRESULT res = f_opendir( &dir, path );
  8001b46:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001b4a:	f5a3 73ee 	sub.w	r3, r3, #476	@ 0x1dc
  8001b4e:	f507 72d2 	add.w	r2, r7, #420	@ 0x1a4
@@ -3078,11 +3087,12 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001b56:	f012 f811 	bl	8013b7c <f_opendir>
  8001b5a:	4603      	mov	r3, r0
  8001b5c:	f887 31df 	strb.w	r3, [r7, #479]	@ 0x1df
-	if (res != FR_OK) {
+    if( res != FR_OK )
  8001b60:	f897 31df 	ldrb.w	r3, [r7, #479]	@ 0x1df
  8001b64:	2b00      	cmp	r3, #0
  8001b66:	d00f      	beq.n	8001b88 <sd_list_directory_recursive+0x5c>
-		printf("%*s[ERR] Cannot open: %s\r\n", depth * 2, "", path);
+    {
+        printf( "%*s[ERR] Cannot open: %s\r\n", depth * 2, "", path );
  8001b68:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001b6c:	f5a3 73f0 	sub.w	r3, r3, #480	@ 0x1e0
  8001b70:	681b      	ldr	r3, [r3, #0]
@@ -3094,11 +3104,12 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001b80:	483e      	ldr	r0, [pc, #248]	@ (8001c7c <sd_list_directory_recursive+0x150>)
  8001b82:	f012 fc61 	bl	8014448 <iprintf>
  8001b86:	e072      	b.n	8001c6e <sd_list_directory_recursive+0x142>
-		return;
-	}
+        return;
+    }
 
-	while (1) {
-		res = f_readdir(&dir, &fno);
+    while( 1 )
+    {
+        res = f_readdir( &dir, &fno );
  8001b88:	f107 028c 	add.w	r2, r7, #140	@ 0x8c
  8001b8c:	f507 73d2 	add.w	r3, r7, #420	@ 0x1a4
  8001b90:	4611      	mov	r1, r2
@@ -3106,7 +3117,7 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001b94:	f012 f89b 	bl	8013cce <f_readdir>
  8001b98:	4603      	mov	r3, r0
  8001b9a:	f887 31df 	strb.w	r3, [r7, #479]	@ 0x1df
-		if (res != FR_OK || fno.fname[0] == 0) break;
+        if( res != FR_OK || fno.fname[0] == 0 )
  8001b9e:	f897 31df 	ldrb.w	r3, [r7, #479]	@ 0x1df
  8001ba2:	2b00      	cmp	r3, #0
  8001ba4:	d15e      	bne.n	8001c64 <sd_list_directory_recursive+0x138>
@@ -3115,20 +3126,22 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001bae:	7d9b      	ldrb	r3, [r3, #22]
  8001bb0:	2b00      	cmp	r3, #0
  8001bb2:	d057      	beq.n	8001c64 <sd_list_directory_recursive+0x138>
+            break;
 
-		const char *name = (*fno.fname) ? fno.fname : fno.fname;
+        const char *name = ( *fno.fname ) ? fno.fname : fno.fname;
  8001bb4:	f107 038c 	add.w	r3, r7, #140	@ 0x8c
  8001bb8:	3316      	adds	r3, #22
  8001bba:	f8c7 31d8 	str.w	r3, [r7, #472]	@ 0x1d8
 
-		if (fno.fattrib & AM_DIR) {
+        if( fno.fattrib & AM_DIR )
  8001bbe:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001bc2:	f5a3 73aa 	sub.w	r3, r3, #340	@ 0x154
  8001bc6:	7a1b      	ldrb	r3, [r3, #8]
  8001bc8:	f003 0310 	and.w	r3, r3, #16
  8001bcc:	2b00      	cmp	r3, #0
  8001bce:	d036      	beq.n	8001c3e <sd_list_directory_recursive+0x112>
-			if (strcmp(name, ".") && strcmp(name, "..")) {
+        {
+            if( strcmp( name, "." ) && strcmp( name, ".." ) )
  8001bd0:	492b      	ldr	r1, [pc, #172]	@ (8001c80 <sd_list_directory_recursive+0x154>)
  8001bd2:	f8d7 01d8 	ldr.w	r0, [r7, #472]	@ 0x1d8
  8001bd6:	f7fe fb03 	bl	80001e0 <strcmp>
@@ -3141,7 +3154,8 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001bea:	4603      	mov	r3, r0
  8001bec:	2b00      	cmp	r3, #0
  8001bee:	d0cb      	beq.n	8001b88 <sd_list_directory_recursive+0x5c>
-				printf("%*s📁 %s\r\n", depth * 2, "", name);
+            {
+                printf( "%*s📁 %s\r\n", depth * 2, "", name );
  8001bf0:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001bf4:	f5a3 73f0 	sub.w	r3, r3, #480	@ 0x1e0
  8001bf8:	681b      	ldr	r3, [r3, #0]
@@ -3150,8 +3164,8 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001c00:	4a1d      	ldr	r2, [pc, #116]	@ (8001c78 <sd_list_directory_recursive+0x14c>)
  8001c02:	4821      	ldr	r0, [pc, #132]	@ (8001c88 <sd_list_directory_recursive+0x15c>)
  8001c04:	f012 fc20 	bl	8014448 <iprintf>
-				char newpath[128];
-				snprintf(newpath, sizeof(newpath), "%s/%s", path, name);
+                char newpath[128];
+                snprintf( newpath, sizeof( newpath ), "%s/%s", path, name );
  8001c08:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001c0c:	f5a3 73ee 	sub.w	r3, r3, #476	@ 0x1dc
  8001c10:	f107 000c 	add.w	r0, r7, #12
@@ -3161,7 +3175,7 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001c1c:	4a1b      	ldr	r2, [pc, #108]	@ (8001c8c <sd_list_directory_recursive+0x160>)
  8001c1e:	2180      	movs	r1, #128	@ 0x80
  8001c20:	f012 fc82 	bl	8014528 <sniprintf>
-				sd_list_directory_recursive(newpath, depth + 1);
+                sd_list_directory_recursive( newpath, depth + 1 );
  8001c24:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001c28:	f5a3 73f0 	sub.w	r3, r3, #480	@ 0x1e0
  8001c2c:	681b      	ldr	r3, [r3, #0]
@@ -3171,9 +3185,11 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001c36:	4618      	mov	r0, r3
  8001c38:	f7ff ff78 	bl	8001b2c <sd_list_directory_recursive>
  8001c3c:	e7a4      	b.n	8001b88 <sd_list_directory_recursive+0x5c>
-			}
-		} else {
-			printf("%*s📄 %s (%lu bytes)\r\n", depth * 2, "", name, (unsigned long)fno.fsize);
+            }
+        }
+        else
+        {
+            printf( "%*s📄 %s (%lu bytes)\r\n", depth * 2, "", name, (unsigned long) fno.fsize );
  8001c3e:	f507 73f0 	add.w	r3, r7, #480	@ 0x1e0
  8001c42:	f5a3 73f0 	sub.w	r3, r3, #480	@ 0x1e0
  8001c46:	681b      	ldr	r3, [r3, #0]
@@ -3186,11 +3202,11 @@ void sd_list_directory_recursive(const char *path, int depth) {
  8001c5a:	4a07      	ldr	r2, [pc, #28]	@ (8001c78 <sd_list_directory_recursive+0x14c>)
  8001c5c:	480c      	ldr	r0, [pc, #48]	@ (8001c90 <sd_list_directory_recursive+0x164>)
  8001c5e:	f012 fbf3 	bl	8014448 <iprintf>
-	while (1) {
+    {
  8001c62:	e791      	b.n	8001b88 <sd_list_directory_recursive+0x5c>
-		}
-	}
-	f_closedir(&dir);
+        }
+    }
+    f_closedir( &dir );
  8001c64:	f507 73d2 	add.w	r3, r7, #420	@ 0x1a4
  8001c68:	4618      	mov	r0, r3
  8001c6a:	f012 f80a 	bl	8013c82 <f_closedir>
@@ -3209,17 +3225,18 @@ void sd_list_directory_recursive(const char *path, int depth) {
 
 08001c94 <sd_list_files>:
 
-void sd_list_files(void) {
+void sd_list_files( void )
+{
  8001c94:	b580      	push	{r7, lr}
  8001c96:	af00      	add	r7, sp, #0
-	printf("📂 Files on SD Card:\r\n");
+    printf( "📂 Files on SD Card:\r\n" );
  8001c98:	4805      	ldr	r0, [pc, #20]	@ (8001cb0 <sd_list_files+0x1c>)
  8001c9a:	f012 fc3d 	bl	8014518 <puts>
-	sd_list_directory_recursive(sd_path, 0);
+    sd_list_directory_recursive( sd_path, 0 );
  8001c9e:	2100      	movs	r1, #0
  8001ca0:	4804      	ldr	r0, [pc, #16]	@ (8001cb4 <sd_list_files+0x20>)
  8001ca2:	f7ff ff43 	bl	8001b2c <sd_list_directory_recursive>
-	printf("\r\n\r\n");
+    printf( "\r\n\r\n" );
  8001ca6:	4804      	ldr	r0, [pc, #16]	@ (8001cb8 <sd_list_files+0x24>)
  8001ca8:	f012 fc36 	bl	8014518 <puts>
 }

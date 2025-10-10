@@ -3,6 +3,10 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="sd_path"/>
+		<item value="data_ready"/>
+		<item value="status = "/>
+		<item value="debounce_button"/>
 		<item value="SD_CS_LOW"/>
 	</list>
 </section>
