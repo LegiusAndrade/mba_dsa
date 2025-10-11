@@ -34,22 +34,28 @@
 typedef struct
 {
     uint32_t timestamp;
-    IKS4A1_MOTION_SENSOR_Axes_t acceleration;
-    IKS4A1_MOTION_SENSOR_Axes_t angular_velocity;
+    IKS4A1_MOTION_SENSOR_AxesRaw_t acceleration;
+    IKS4A1_MOTION_SENSOR_AxesRaw_t angular_velocity;
+    IKS4A1_MOTION_SENSOR_Axes_t magnetic_field;
+    IKS4A1_MOTION_SENSOR_AxesRaw_t acceleration_2;
+    IKS4A1_MOTION_SENSOR_AxesRaw_t angular_velocity_2;
+
 } sensors_data_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BASE_TIME_TIM1		100					                        // in ms
-#define TIME_READ_IN_SECONDS  300				                      // total time to read in seconds
+#define BASE_TIME_TIM1		10					                        // in ms
+#define TIME_READ_IN_SECONDS  20				                      // total time to read in seconds
 #define TIME_READ         (TIME_READ_IN_SECONDS*1000)				  // total time to read in ms
 #define AMOUNT_DATA		    (TIME_READ/BASE_TIME_TIM1)					// amount of data to read
 
+#define TEST_LIMIT(x)       (x > INT16_MAX ? INT16_MAX : x < INT16_MIN ? INT16_MIN : x )
 typedef enum
 {
     READY = 0,
     ACQUIRING,
+    WRITING_SD,
     COMPLETE
 } e_STATUS;
 
@@ -186,7 +192,7 @@ int main( void )
         if( data_ready )
         {
             const char name_file[] = { "sensor_data.csv" };
-            const char header_csv[] = "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z\n";
+            const char header_csv[] = { "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z,Accel2_X,Accel2_Y,Accel2_Z,Gyro2_X,Gyro2_Y,Gyro2_Z,Mag_X,Mag_Y,Mag_Z\n" };
             // Save data to SD card
             sd_mount();
             sd_list_files();
@@ -195,13 +201,29 @@ int main( void )
             for( size_t i = 0; i < AMOUNT_DATA; i++ )
             {
                 char line[128] = { 0 };
-                snprintf( line, sizeof( line ), "%lu,%ld,%ld,%ld,%ld,%ld,%ld\n", (unsigned long) sensor_data[i].timestamp, (long) sensor_data[i].acceleration.x,
-                          (long) sensor_data[i].acceleration.y, (long) sensor_data[i].acceleration.z, (long) sensor_data[i].angular_velocity.x,
-                          (long) sensor_data[i].angular_velocity.y, (long) sensor_data[i].angular_velocity.z );
+                snprintf(line, sizeof(line),
+                         "%lu,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%ld,%ld,%ld\n",
+                         (unsigned long)sensor_data[i].timestamp,
+                         (int)sensor_data[i].acceleration.x,
+                         (int)sensor_data[i].acceleration.y,
+                         (int)sensor_data[i].acceleration.z,
+                         (int)sensor_data[i].angular_velocity.x,
+                         (int)sensor_data[i].angular_velocity.y,
+                         (int)sensor_data[i].angular_velocity.z,
+                         (int)sensor_data[i].acceleration_2.x,
+                         (int)sensor_data[i].acceleration_2.y,
+                         (int)sensor_data[i].acceleration_2.z,
+                         (int)sensor_data[i].angular_velocity_2.x,
+                         (int)sensor_data[i].angular_velocity_2.y,
+                         (int)sensor_data[i].angular_velocity_2.z,
+                         (long)sensor_data[i].magnetic_field.x,
+                         (long)sensor_data[i].magnetic_field.y,
+                         (long)sensor_data[i].magnetic_field.z);
                 sd_append_file( name_file, line );
             }
             sd_unmount();
-            while(1);
+            status = COMPLETE;
+            while( 1 );
         }
 
         /*      if (data_ready) {
@@ -335,7 +357,7 @@ static void MX_TIM1_Init( void )
     htim1.Instance = TIM1;
     htim1.Init.Prescaler = 8399;
     htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim1.Init.Period = 999;
+    htim1.Init.Period = 99;
     htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim1.Init.RepetitionCounter = 0;
     htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
@@ -415,25 +437,19 @@ void Check_Button( void )
     if( HAL_GPIO_ReadPin( BUTTON_D8_GPIO_Port, BUTTON_D8_Pin ) == GPIO_PIN_RESET ) // Button pressed
     {
         debounce_button++;
-        if( button_state == _BUTTON_RELEASED )
+        if( button_state == _BUTTON_RELEASED && status == READY )
         {
             if( debounce_button >= 5 ) // debounce time ~500ms
             {
                 button_state = _BUTTON_PRESSED;
                 debounce_button = 0;
-                {
-                    if( status == READY )
-                    {
-                        status = ACQUIRING;
-                        count_data = 0;
-                        data_ready = 0;
-                    }
-                    else if( status == ACQUIRING )
-                    {
-                        status = COMPLETE;
-                    }
-                    count_led_status = 0;
-                }
+
+                status = ACQUIRING;
+                count_data = 0;
+                data_ready = 0;
+
+                count_led_status = 0;
+
             }
         }
         else
@@ -459,17 +475,57 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
             // Your code to be executed every second
             if( count_data < AMOUNT_DATA )
             {
-                if( IKS4A1_MOTION_SENSOR_GetAxes(
-                IKS4A1_LSM6DSV16X_0,
-                                                  MOTION_ACCELERO, &sensor_data[count_data].acceleration ) != 0 )
+                IKS4A1_MOTION_SENSOR_Axes_t data = { 0 };
+                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, &data ) != 0 )
                 {
                     // Handle error
                 }
-                if( IKS4A1_MOTION_SENSOR_GetAxes(
-                IKS4A1_LSM6DSV16X_0,
-                                                  MOTION_GYRO, &sensor_data[count_data].angular_velocity ) != 0 )
+                else
+                {
+                    sensor_data[count_data].acceleration.x = TEST_LIMIT( data.x ); // to g
+                    sensor_data[count_data].acceleration.y = TEST_LIMIT( data.y );
+                    sensor_data[count_data].acceleration.z = TEST_LIMIT( data.z );
+                }
+                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LSM6DSV16X_0, MOTION_GYRO, &data ) != 0 )
                 {
                     // Handle error
+                }
+                else
+                {
+                    sensor_data[count_data].angular_velocity.x = data.x / 1000; // to dps
+                    sensor_data[count_data].angular_velocity.y = data.y / 1000;
+                    sensor_data[count_data].angular_velocity.z = data.z / 1000;
+                }
+
+                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LIS2DUXS12_0, MOTION_ACCELERO, &data ) != 0 )
+                {
+                    // Handle error
+                }
+                else
+                {
+                    sensor_data[count_data].acceleration_2.x = TEST_LIMIT( data.x ); // to g
+                    sensor_data[count_data].acceleration_2.y = TEST_LIMIT( data.y );
+                    sensor_data[count_data].acceleration_2.z = TEST_LIMIT( data.z );
+                }
+                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LIS2DUXS12_0, MOTION_GYRO, &data ) != 0 )
+                {
+                    // Handle error
+                }
+                else
+                {
+                    sensor_data[count_data].angular_velocity_2.x = data.x / 1000; // to dps
+                    sensor_data[count_data].angular_velocity_2.y = data.y / 1000;
+                    sensor_data[count_data].angular_velocity_2.z = data.z / 1000;
+                }
+                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LIS2MDL_0, MOTION_MAGNETO, &data ) != 0 )
+                {
+                    // Handle error
+                }
+                else
+                {
+                    sensor_data[count_data].magnetic_field.x = data.x; // to mgauss
+                    sensor_data[count_data].magnetic_field.y = data.y;
+                    sensor_data[count_data].magnetic_field.z = data.z;
                 }
 
                 sensor_data[count_data].timestamp = count_data * BASE_TIME_TIM1; //now - prev;
@@ -479,7 +535,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
             }
             else
             {
-                status = COMPLETE;
+                status = WRITING_SD;
                 data_ready = 1;           // avisa a thread principal
             }
         }
@@ -489,7 +545,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
         {
             case READY:
             {
-                if( count_led_status >= 10 ) // toggle every second
+                if( count_led_status >= 1000/BASE_TIME_TIM1 ) // toggle every second
                 {
                     count_led_status = 0;
                 }
@@ -497,7 +553,16 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                 break;
             case ACQUIRING:
             {
-                if( count_led_status >= 3 ) // toggle every second
+                if( count_led_status >= 500/BASE_TIME_TIM1 ) // toggle every 500ms
+                {
+                    count_led_status = 0;
+                }
+
+            }
+            break;
+            case WRITING_SD:
+            {
+                if( count_led_status >= 100/BASE_TIME_TIM1 ) // toggle every 100ms
                 {
                     count_led_status = 0;
                 }
@@ -506,7 +571,9 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                 break;
             case COMPLETE:
             {
-                count_led_status = 0;
+                count_led_status = 1;
+                HAL_GPIO_WritePin( LED_STATUS_D7_GPIO_Port, LED_STATUS_D7_Pin, GPIO_PIN_SET );
+
             }
                 break;
 
