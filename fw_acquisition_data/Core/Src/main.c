@@ -36,9 +36,8 @@ typedef struct
     uint32_t timestamp;
     IKS4A1_MOTION_SENSOR_AxesRaw_t acceleration;
     IKS4A1_MOTION_SENSOR_AxesRaw_t angular_velocity;
-    IKS4A1_MOTION_SENSOR_Axes_t magnetic_field;
-    IKS4A1_MOTION_SENSOR_AxesRaw_t acceleration_2;
-    IKS4A1_MOTION_SENSOR_AxesRaw_t angular_velocity_2;
+    IKS4A1_MOTION_SENSOR_AxesRaw_t magnetic_field;
+
 
 } sensors_data_t;
 /* USER CODE END PTD */
@@ -46,7 +45,7 @@ typedef struct
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define BASE_TIME_TIM1		10					                        // in ms
-#define TIME_READ_IN_SECONDS  20				                      // total time to read in seconds
+#define TIME_READ_IN_SECONDS  35				                      // total time to read in seconds
 #define TIME_READ         (TIME_READ_IN_SECONDS*1000)				  // total time to read in ms
 #define AMOUNT_DATA		    (TIME_READ/BASE_TIME_TIM1)					// amount of data to read
 
@@ -143,6 +142,30 @@ int main( void )
     MX_MEMS_Init();
     /* USER CODE BEGIN 2 */
     HAL_TIM_Base_Start_IT( &htim1 );
+    IKS4A1_MOTION_SENSOR_SetOutputDataRate( IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, 1920.0f );
+    IKS4A1_MOTION_SENSOR_SetOutputDataRate( IKS4A1_LSM6DSO16IS_0, MOTION_ACCELERO, 1667.0f );
+    IKS4A1_MOTION_SENSOR_SetOutputDataRate( IKS4A1_LSM6DSV16X_0, MOTION_GYRO, 1920.0f );
+    IKS4A1_MOTION_SENSOR_SetOutputDataRate( IKS4A1_LSM6DSO16IS_0, MOTION_GYRO, 1667.0f );
+    IKS4A1_MOTION_SENSOR_SetOutputDataRate( IKS4A1_LIS2MDL_0, MOTION_MAGNETO, 100.0f );
+    IKS4A1_MOTION_SENSOR_SetFullScale( IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, 2 );
+    IKS4A1_MOTION_SENSOR_SetFullScale( IKS4A1_LSM6DSO16IS_0, MOTION_ACCELERO, 2 );
+    IKS4A1_MOTION_SENSOR_SetFullScale( IKS4A1_LSM6DSV16X_0, MOTION_GYRO, 2000 );
+    IKS4A1_MOTION_SENSOR_SetFullScale( IKS4A1_LSM6DSO16IS_0, MOTION_GYRO, 2000 );
+    IKS4A1_MOTION_SENSOR_SetFullScale( IKS4A1_LIS2MDL_0, MOTION_MAGNETO, 4 );
+
+    float a, b, c, d, e;
+    int32_t f, g, h, i, j;
+    IKS4A1_MOTION_SENSOR_GetOutputDataRate( IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, &a );
+    IKS4A1_MOTION_SENSOR_GetOutputDataRate( IKS4A1_LSM6DSO16IS_0, MOTION_ACCELERO, &b );
+    IKS4A1_MOTION_SENSOR_GetOutputDataRate( IKS4A1_LSM6DSV16X_0, MOTION_GYRO, &c );
+    IKS4A1_MOTION_SENSOR_GetOutputDataRate( IKS4A1_LSM6DSO16IS_0, MOTION_GYRO, &d );
+    IKS4A1_MOTION_SENSOR_GetOutputDataRate( IKS4A1_LIS2MDL_0, MOTION_MAGNETO, &e );
+    IKS4A1_MOTION_SENSOR_GetFullScale( IKS4A1_LSM6DSV16X_0, MOTION_ACCELERO, &f );
+    IKS4A1_MOTION_SENSOR_GetFullScale( IKS4A1_LSM6DSO16IS_0, MOTION_ACCELERO, &g );
+    IKS4A1_MOTION_SENSOR_GetFullScale( IKS4A1_LSM6DSV16X_0, MOTION_GYRO, &h );
+    IKS4A1_MOTION_SENSOR_GetFullScale( IKS4A1_LSM6DSO16IS_0, MOTION_GYRO, &i );
+    IKS4A1_MOTION_SENSOR_GetFullScale( IKS4A1_LIS2MDL_0, MOTION_MAGNETO, &j );
+
     /*sd_mount();
      sd_list_files();
      sd_unmount();*/
@@ -192,7 +215,8 @@ int main( void )
         if( data_ready )
         {
             const char name_file[] = { "sensor_data.csv" };
-            const char header_csv[] = { "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z,Accel2_X,Accel2_Y,Accel2_Z,Gyro2_X,Gyro2_Y,Gyro2_Z,Mag_X,Mag_Y,Mag_Z\n" };
+            const char header_csv[] = {
+                    "Timestamp,Accel_X,Accel_Y,Accel_Z,Gyro_X,Gyro_Y,Gyro_Z,Mag_X,Mag_Y,Mag_Z\n" };
             // Save data to SD card
             sd_mount();
             sd_list_files();
@@ -201,24 +225,10 @@ int main( void )
             for( size_t i = 0; i < AMOUNT_DATA; i++ )
             {
                 char line[128] = { 0 };
-                snprintf(line, sizeof(line),
-                         "%lu,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%ld,%ld,%ld\n",
-                         (unsigned long)sensor_data[i].timestamp,
-                         (int)sensor_data[i].acceleration.x,
-                         (int)sensor_data[i].acceleration.y,
-                         (int)sensor_data[i].acceleration.z,
-                         (int)sensor_data[i].angular_velocity.x,
-                         (int)sensor_data[i].angular_velocity.y,
-                         (int)sensor_data[i].angular_velocity.z,
-                         (int)sensor_data[i].acceleration_2.x,
-                         (int)sensor_data[i].acceleration_2.y,
-                         (int)sensor_data[i].acceleration_2.z,
-                         (int)sensor_data[i].angular_velocity_2.x,
-                         (int)sensor_data[i].angular_velocity_2.y,
-                         (int)sensor_data[i].angular_velocity_2.z,
-                         (long)sensor_data[i].magnetic_field.x,
-                         (long)sensor_data[i].magnetic_field.y,
-                         (long)sensor_data[i].magnetic_field.z);
+                snprintf( line, sizeof( line ), "%lu,%d,%d,%d,%d,%d,%d,%ld,%ld,%ld\n", (unsigned long) sensor_data[i].timestamp,
+                          (int) sensor_data[i].acceleration.x, (int) sensor_data[i].acceleration.y, (int) sensor_data[i].acceleration.z,
+                          (int) sensor_data[i].angular_velocity.x, (int) sensor_data[i].angular_velocity.y, (int) sensor_data[i].angular_velocity.z,
+                          (long) sensor_data[i].magnetic_field.x, (long) sensor_data[i].magnetic_field.y, (long) sensor_data[i].magnetic_field.z );
                 sd_append_file( name_file, line );
             }
             sd_unmount();
@@ -497,7 +507,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                     sensor_data[count_data].angular_velocity.z = data.z / 1000;
                 }
 
-                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LIS2DUXS12_0, MOTION_ACCELERO, &data ) != 0 )
+                /*if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LSM6DSO16IS_0, MOTION_ACCELERO, &data ) != 0 )
                 {
                     // Handle error
                 }
@@ -507,7 +517,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                     sensor_data[count_data].acceleration_2.y = TEST_LIMIT( data.y );
                     sensor_data[count_data].acceleration_2.z = TEST_LIMIT( data.z );
                 }
-                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LIS2DUXS12_0, MOTION_GYRO, &data ) != 0 )
+                if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LSM6DSO16IS_0, MOTION_GYRO, &data ) != 0 )
                 {
                     // Handle error
                 }
@@ -516,7 +526,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                     sensor_data[count_data].angular_velocity_2.x = data.x / 1000; // to dps
                     sensor_data[count_data].angular_velocity_2.y = data.y / 1000;
                     sensor_data[count_data].angular_velocity_2.z = data.z / 1000;
-                }
+                }*/
                 if( IKS4A1_MOTION_SENSOR_GetAxes( IKS4A1_LIS2MDL_0, MOTION_MAGNETO, &data ) != 0 )
                 {
                     // Handle error
@@ -545,7 +555,7 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
         {
             case READY:
             {
-                if( count_led_status >= 1000/BASE_TIME_TIM1 ) // toggle every second
+                if( count_led_status >= 1000 / BASE_TIME_TIM1 ) // toggle every second
                 {
                     count_led_status = 0;
                 }
@@ -553,16 +563,16 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef * htim )
                 break;
             case ACQUIRING:
             {
-                if( count_led_status >= 500/BASE_TIME_TIM1 ) // toggle every 500ms
+                if( count_led_status >= 500 / BASE_TIME_TIM1 ) // toggle every 500ms
                 {
                     count_led_status = 0;
                 }
 
             }
-            break;
+                break;
             case WRITING_SD:
             {
-                if( count_led_status >= 100/BASE_TIME_TIM1 ) // toggle every 100ms
+                if( count_led_status >= 100 / BASE_TIME_TIM1 ) // toggle every 100ms
                 {
                     count_led_status = 0;
                 }
