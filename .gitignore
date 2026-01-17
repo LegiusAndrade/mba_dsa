@@ -1,0 +1,67 @@
+# =========================
+# Python / VSCode
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# =========================
+# STM32CubeIDE / Eclipse
+# =========================
+# Eclipse metadata
+.metadata/
+.recommenders/
+.settings/
+.project
+.cproject
+
+# CubeIDE build folders
+Debug/
+Release/
+build/
+*/Debug/
+*/Release/
+
+# Generated/temporary
+*.o
+*.a
+*.d
+*.su
+*.map
+*.elf
+*.hex
+*.bin
+*.list
+
+# CubeMX generated backups
+*.ioc.bak
+*.launch
+*.mxproject
+
+# =========================
+# STM32 HAL/CMSIS note
+# =========================
+# (Normalmente você mantém Drivers/, Core/, Middlewares/ versionados)
+# então NÃO coloque eles aqui.
+# =========================
+
+# =========================
+# Dados (ajuste conforme sua decisão)
+# =========================
+# Se quiser ignorar os CSVs de testes:
+# python/Dados/Arquivos/
+# Mas manter a pasta no repo (opcional):
+# !python/Dados/Arquivos/.gitkeep
