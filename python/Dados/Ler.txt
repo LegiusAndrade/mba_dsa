@@ -1,3 +1,0 @@
-Test_In_Home_1: Teste no chão de casa plano parado
-Test_In_Home_2: Teste no chão de casa plano parado
-Test_In_Home_3: Teste no chão de casa plano parado
