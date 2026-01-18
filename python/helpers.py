@@ -36,3 +36,10 @@ def descritiva(df_, var, vresp='survived', max_classes=5):
     # Exibir o gráfico
     plt.show()
     
+def relatorio_missing(df):
+    print(f'Número de linhas: {df.shape[0]} | Número de colunas: {df.shape[1]}')
+    return pd.DataFrame({   'Pct_missing': df.isna().mean().apply(lambda x: f"{x:.1%}"),
+                            'Freq_missing': df.isna().sum().apply(lambda x: f"{x:,.0f}").replace(',','.')})
+    
+    
+    
